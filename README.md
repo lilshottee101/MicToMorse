@@ -1,2 +1,34 @@
 # MicToMorse
-Static Website to translate mic noises into Morse code then into text for Text to Speech.
+
+MicToMorse is an accessibility-focused project designed to help people with disabilities — such as quadriplegics who do not have the ability to speak — communicate by making simple sounds into a microphone. These sounds are converted into **Morse code (dots and dashes)** and then translated into **text**, with an optional **push-to-speak** feature for voice output.
+
+---
+
+## 🌐 Live Demo
+A public version of the project is available here:  
+👉 [MicToMorse Live](https://mictomorse.pages.dev)
+
+No installation is required — just open the link in your browser, allow microphone access, and start communicating.
+
+---
+
+## ✨ Features
+- 🎙️ **Microphone Input**: Detects noise patterns through a mic  
+- ⬤ **Morse Conversion**: Translates short and long sounds into dots and dashes  
+- 🔤 **Text Output**: Converts Morse code into readable text  
+- 🔊 **Push-to-Speak Option**: Reads the generated text aloud for communication  
+- 🛠️ **Accessibility First**: Designed especially for individuals with limited mobility and no vocal cords  
+
+---
+
+## 🚀 Getting Started
+
+### Option 1: Use the Live Demo
+Just visit [mictomorse.pages.dev](https://mictomorse.pages.dev).
+
+### Option 2: Run Locally
+Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/MicToMorse.git
+cd MicToMorse
