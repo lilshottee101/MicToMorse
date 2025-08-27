@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,86 +16,265 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            min-height: 100vh;
-            padding: 20px;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
+        .app-container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+        }
+
+        .app-container.navbar-right {
+            flex-direction: row-reverse;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .control-group {
             display: flex;
             flex-direction: column;
+            border-right: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .app-container.navbar-right .navbar {
+            border-right: none;
+            border-left: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar-header {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 70px;
+        }
+
+        .navbar-title {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .navbar-toggle {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .navbar-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .navbar-scroll-container {
+            height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+        }
+
+        .navbar-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .navbar-scroll-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .navbar-scroll-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .navbar-section {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-nav {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 10px 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .section-nav-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 12px 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .section-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-nav-btn.active {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        }
+
+        .section-title {
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .setting-item {
+            margin-bottom: 20px;
+        }
+
+        .setting-label {
+            display: block;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
             gap: 5px;
         }
 
-        label {
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-
-        input, button, select {
+        .setting-input {
+            flex: 1;
             padding: 10px;
             border: none;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.9);
             color: #333;
             font-size: 1em;
+            text-align: center;
+            min-width: 80px;
         }
 
-        button {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        .setting-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
             color: white;
-            cursor: pointer;
+            font-size: 1.2em;
             font-weight: bold;
-            transition: all 0.3s ease;
-            min-height: 45px;
-            font-size: 1.1em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        .setting-btn:hover {
+            transform: scale(1.05);
         }
 
-        button:disabled {
-            background: #666;
-            cursor: not-allowed;
-            transform: none;
+        .setting-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Profile Section */
+        .profile-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .profile-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .profile-btn.active {
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+        }
+
+        .profile-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .profile-name-input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .profile-action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .save-btn,
+        .delete-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .save-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    padding-bottom: 180px;
+}
+
+        .status-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
         .permissions-status {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
             font-size: 0.9em;
+            margin-bottom: 10px;
         }
 
         .status-item {
@@ -118,27 +298,17 @@
             font-weight: bold;
         }
 
-        .info-icon {
-            font-size: 0.8em;
-            color: #ffd700;
-            cursor: help;
-            margin-left: 5px;
-        }
-
-        .status {
+        .current-status {
             text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
             font-size: 1.1em;
+            font-weight: bold;
         }
 
         .visualizer {
-            height: 150px;
+            height: 120px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
-            margin: 20px 0;
+            margin-bottom: 20px;
             position: relative;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.2);
@@ -172,39 +342,22 @@
             box-shadow: 0 0 5px #ff6b6b;
         }
 
-        .current-indicator {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.8);
-            color: #333;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 0.8em;
-        }
-
-        .timing-display {
+        .output-container {
             display: flex;
-            justify-content: space-around;
-            margin: 15px 0;
-            font-size: 0.9em;
-        }
-
-        .timing-item {
-            text-align: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            min-width: 100px;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
         }
 
         .output-section {
-            margin: 20px 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
-        .output-section h3 {
+        .output-header {
+            font-size: 1em;
+            font-weight: bold;
             margin-bottom: 10px;
             color: #ffd700;
             display: flex;
@@ -212,416 +365,465 @@
             align-items: center;
         }
 
-        .output {
-            min-height: 80px;
-            max-height: 200px;
+        .output-content {
+            flex: 1;
             padding: 15px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             font-family: 'Courier New', monospace;
-            font-size: 1.2em;
+            font-size: 1.1em;
             line-height: 1.4;
             word-break: break-all;
             border: 2px solid rgba(255, 255, 255, 0.2);
             overflow-y: auto;
+            min-height: 80px;
         }
 
-        .history-controls {
-            display: flex;
-            gap: 10px;
-            font-size: 0.9em;
-        }
-
-        .history-controls button {
-            padding: 5px 10px;
+        .output-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
             font-size: 0.8em;
-            min-height: auto;
+            margin-left: 8px;
         }
 
-        .morse-history {
+        .action-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    display: flex;
+    gap: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    height: 90px;
+}
+
+        .action-btn {
+            flex: 1;
+            min-height: 60px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .start-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+
+        .stop-btn {
+            background: linear-gradient(45deg, #dc3545, #fd7e14);
+        }
+
+        .clear-btn {
+            background: linear-gradient(45deg, #6f42c1, #e83e8c);
+        }
+
+        .speak-btn {
+            background: linear-gradient(45deg, #007bff, #6610f2);
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: -300px;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+
+            .navbar.open {
+                left: 0;
+            }
+
+            .app-container.navbar-right .navbar {
+                left: auto;
+                right: -300px;
+                transition: right 0.3s ease;
+            }
+
+            .app-container.navbar-right .navbar.open {
+                right: 0;
+            }
+
+            .main-content {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .mobile-nav-toggle {
+                display: none;
+            }
+
+            @media (max-width: 768px) {
+                .mobile-nav-toggle {
+                    display: block;
+                    position: fixed;
+                    top: 20px;
+                    left: 20px;
+                    z-index: 1001;
+                    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+                    border: none;
+                    color: white;
+                    padding: 12px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                }
+
+                .app-container.navbar-right .mobile-nav-toggle {
+                    left: auto;
+                    right: 20px;
+                }
+            }
+
+
+            .output-container {
+                flex-direction: column;
+            }
+
+            .action-buttons {
+                flex-wrap: wrap;
+            }
+
+            .action-btn {
+                min-width: calc(50% - 7.5px);
+            }
+        }
+
+        /* Overlay for mobile */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(0, 0, 0, 0.5);
-            max-height: 150px;
-            overflow-y: auto;
-            font-size: 0.9em;
+            z-index: 999;
         }
 
-        .history-item {
-            padding: 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .history-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .timestamp {
-            font-size: 0.7em;
-            color: #ccc;
-        }
-
-        .preset-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .preset-btn {
-            background: linear-gradient(45deg, #4ecdc4, #44a08d);
-            font-size: 0.9em;
-            min-height: 40px;
+        @media (max-width: 768px) {
+            .mobile-overlay.show {
+                display: block;
+            }
         }
 
         .morse-reference {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            font-size: 0.8em;
+        left: 10px;
+        right: 10px;
+        bottom: 150px; /* More space on mobile for wrapped buttons */
+        padding: 8px 10px;
+    }
+    
+    .app-container.navbar-right .morse-reference {
+        left: 10px;
+        right: 10px;
+    }
+    
+    .main-content {
+        padding-bottom: 220px; /* More space on mobile */
+    }
+    
+        /* Timing Display */
+        .timing-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 0.85em;
         }
+
+        .timing-item {
+            text-align: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .timing-value {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 4px;
+        }
+
+        .morse-reference {
+    position: fixed;
+    bottom: 100px; /* Above the action buttons */
+    left: 320px; /* Account for navbar width + padding */
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 10px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 100;
+}
+
+.app-container.navbar-right .morse-reference {
+    left: 20px;
+    right: 320px;
+}
 
         .morse-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 5px;
-            margin-top: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 8px;
         }
 
-        .morse-item {
-            text-align: center;
-            padding: 5px;
+        .morse-char {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        .sensitivity-indicator {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            border-radius: 6px;
+            padding: 8px;
             text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
-        .volume-level {
+        .morse-char:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .morse-char.active {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        .morse-pattern {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
             font-weight: bold;
-            font-size: 1.1em;
-            margin: 5px 0;
+            color: #ffd700;
+            margin-bottom: 4px;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
+        .morse-letter {
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .morse-grid {
+                grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+                gap: 6px;
             }
-            
-            .controls {
-                grid-template-columns: 1fr;
+
+            .morse-char {
+                padding: 6px;
             }
-            
-            h1 {
-                font-size: 2em;
+
+            .morse-pattern {
+                font-size: 0.8em;
             }
-            
-            .timing-display {
-                flex-direction: column;
-                gap: 10px;
+
+            .morse-letter {
+                font-size: 0.7em;
             }
         }
-        .tooltip {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 250px;
-    background-color: rgba(0, 0, 0, 0.9);
-    color: #fff;
-    text-align: left;
-    border-radius: 8px;
-    padding: 10px;
-    position: absolute;
-    z-index: 1000;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -125px;
-    opacity: 0;
-    transition: opacity 0.3s, visibility 0.3s;
-    font-size: 0.85em;
-    line-height: 1.3;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
-
-.profile-section {
-    margin: 20px 0;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-}
-
-.profile-buttons {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-}
-
-.profile-btn {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9em;
-    min-width: 120px;
-    position: relative;
-}
-
-.profile-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.profile-btn.active {
-    background: linear-gradient(45deg, #11998e, #38ef7d);
-}
-
-.profile-controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.profile-name-input {
-    padding: 8px 12px;
-    border-radius: 5px;
-    border: none;
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    font-size: 0.9em;
-    min-width: 150px;
-}
-
-.save-btn, .delete-btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.8em;
-    font-weight: bold;
-}
-
-.save-btn {
-    background: #28a745;
-    color: white;
-}
-
-.delete-btn {
-    background: #dc3545;
-    color: white;
-}
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>🎤 Morse Code Decoder</h1>
-        
-        <div class="permissions-status" id="permissionsStatus">
-            <div class="status-item">
-                <span>🎤 Microphone:</span> <span id="micStatus">Click Start to check</span>
+    <div class="app-container" id="appContainer">
+        <button class="mobile-nav-toggle" id="mobileNavToggle" onclick="decoder.toggleMobileNav()" hidden>☰
+            Settings</button>
+
+        <div class="mobile-overlay" id="mobileOverlay" onclick="decoder.closeMobileNav()"></div>
+
+        <!-- Navbar -->
+        <nav class="navbar" id="navbar">
+            <div class="navbar-header">
+                <div class="navbar-title">Settings</div>
+                <button class="navbar-toggle" onclick="decoder.toggleNavbarSide()">Switch Side</button>
             </div>
-            <div class="status-item">
-                <span>🔊 Text-to-Speech:</span> <span id="ttsStatus">Checking...</span>
-            </div>
-        </div>
-        
-        <div class="controls">
-            <div class="control-group">
-                <label for="threshold" class="tooltip">Volume Threshold <span class="info-icon">ℹ️</span>
-                    <span class="tooltiptext">Set how loud sounds need to be to register as signals. Lower values detect quieter sounds. Adjust so it's just above your background noise level but below your intentional sounds.</span>
-                </label>
-                <input type="range" id="threshold" min="5" max="95" value="30">
-                <span id="thresholdValue">30</span>
-                <div class="sensitivity-indicator">
-                    <div>Current Volume: <span id="currentVolume" class="volume-level">0</span></div>
-                    <div style="font-size: 0.8em; margin-top: 5px;">Adjust threshold so it's just below your quiet sounds</div>
+
+            <div class="navbar-content">
+                <div class="navbar-scroll-container">
+                    <div class="section-nav">
+                        <button class="section-nav-btn active" id="audioSectionBtn"
+                            onclick="decoder.switchToSection('audio')">Audio & Timing</button>
+                        <button class="section-nav-btn" id="profileSectionBtn"
+                            onclick="decoder.switchToSection('profiles')">Profiles</button>
+                    </div>
+                    <!-- Audio & Timing Settings -->
+                    <div class="navbar-section" id="audioSection">
+                        <div class="section-title">Audio & Timing</div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Volume Threshold</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" onclick="decoder.adjustSetting('threshold', -5)">−</button>
+                                <input type="number" class="setting-input" id="thresholdInput" min="5" max="95"
+                                    value="30" onchange="decoder.updateSetting('threshold', this.value)">
+                                <button class="setting-btn" onclick="decoder.adjustSetting('threshold', 5)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Dot Length (ms)</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" onclick="decoder.adjustSetting('dotLength', -50)">−</button>
+                                <input type="number" class="setting-input" id="dotLengthInput" min="50" max="1000"
+                                    value="200" onchange="decoder.updateSetting('dotLength', this.value)">
+                                <button class="setting-btn" onclick="decoder.adjustSetting('dotLength', 50)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Dash Multiplier</label>
+                            <div class="setting-control">
+                                <button class="setting-btn"
+                                    onclick="decoder.adjustSetting('dashMultiplier', -0.1)">−</button>
+                                <input type="number" class="setting-input" id="dashMultiplierInput" min="1.1" max="5"
+                                    step="0.1" value="2.5"
+                                    onchange="decoder.updateSetting('dashMultiplier', this.value)">
+                                <button class="setting-btn"
+                                    onclick="decoder.adjustSetting('dashMultiplier', 0.1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Letter Gap (ms)</label>
+                            <div class="setting-control">
+                                <button class="setting-btn"
+                                    onclick="decoder.adjustSetting('letterGap', -100)">−</button>
+                                <input type="number" class="setting-input" id="letterGapInput" min="300" max="2000"
+                                    value="600" onchange="decoder.updateSetting('letterGap', this.value)">
+                                <button class="setting-btn" onclick="decoder.adjustSetting('letterGap', 100)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Word Gap (ms)</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" onclick="decoder.adjustSetting('wordGap', -200)">−</button>
+                                <input type="number" class="setting-input" id="wordGapInput" min="800" max="4000"
+                                    value="1500" onchange="decoder.updateSetting('wordGap', this.value)">
+                                <button class="setting-btn" onclick="decoder.adjustSetting('wordGap', 200)">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Section -->
+                    <div class="navbar-section" id="profileSection" style="display: none;">
+                        <div class="section-title">Settings Profiles</div>
+
+                        <div class="profile-buttons">
+                            <button class="profile-btn" id="profile1Btn" onclick="decoder.loadProfile(1)">Profile
+                                1</button>
+                            <button class="profile-btn" id="profile2Btn" onclick="decoder.loadProfile(2)">Profile
+                                2</button>
+                            <button class="profile-btn" id="profile3Btn" onclick="decoder.loadProfile(3)">Profile
+                                3</button>
+                        </div>
+
+                        <div class="profile-controls">
+                            <input type="text" id="profileName" class="profile-name-input"
+                                placeholder="Enter profile name..." maxlength="20">
+                            <div class="profile-action-btns">
+                                <button class="save-btn" onclick="decoder.saveCurrentProfile()">Save Current</button>
+                                <button class="delete-btn" onclick="decoder.deleteCurrentProfile()">Delete</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="control-group">
-                <label for="dotLength" class="tooltip">Short Sound Duration (ms) <span class="info-icon">ℹ️</span>
-                    <span class="tooltiptext">How long a sound needs to be to register as a "dot" (short signal). Sounds shorter than this are ignored. Sounds longer than this times the multiplier become "dashes" (long signals).</span>
-                </label>
-                <input type="range" id="dotLength" min="50" max="1000" value="200">
-                <span id="dotLengthValue">200ms</span>
-            </div>
-            
-            <div class="control-group">
-                <label for="dashMultiplier" class="tooltip">Long Sound Multiplier <span class="info-icon">ℹ️</span>
-                    <span class="tooltiptext">How much longer a sound needs to be to register as a "dash" instead of a "dot". For example, 2.5x means dashes need to be 2.5 times longer than the dot duration.</span>
-                </label>
-                <input type="range" id="dashMultiplier" min="1.5" max="5" value="2.5" step="0.1">
-                <span id="dashMultiplierValue">2.5x</span>
-            </div>
-            
-            <div class="control-group">
-                <label for="letterGap" class="tooltip">Letter Gap (ms) <span class="info-icon">ℹ️</span>
-                    <span class="tooltiptext">How long to pause between dots/dashes to indicate the end of a letter. When you pause this long, the system converts your dots and dashes into a letter.</span>
-                </label>
-                <input type="range" id="letterGap" min="300" max="2000" value="600">
-                <span id="letterGapValue">600ms</span>
-            </div>
-            
-            <div class="control-group">
-                <label for="wordGap" class="tooltip">Word Gap (ms) <span class="info-icon">ℹ️</span>
-                    <span class="tooltiptext">How long to pause to indicate the end of a word. When you pause this long, the system adds a space between words in your decoded text.</span>
-                </label>
-                <input type="range" id="wordGap" min="800" max="4000" value="1500">
-                <span id="wordGapValue">1500ms</span>
-            </div>
-        </div>
+        </nav>
 
-        <div class="profile-section">
-          <h4>⚙️ Settings Profiles</h4>
-          <div class="profile-buttons">
-              <button class="profile-btn" id="profile1Btn" onclick="decoder.loadProfile(1)">Profile 1</button>
-              <button class="profile-btn" id="profile2Btn" onclick="decoder.loadProfile(2)">Profile 2</button>
-              <button class="profile-btn" id="profile3Btn" onclick="decoder.loadProfile(3)">Profile 3</button>
-          </div>
-          <div class="profile-controls">
-              <input type="text" id="profileName" class="profile-name-input" placeholder="Enter profile name..." maxlength="20">
-              <button class="save-btn" onclick="decoder.saveCurrentProfile()">💾 Save Current</button>
-              <button class="delete-btn" onclick="decoder.deleteCurrentProfile()">🗑️ Delete</button>
-          </div>
-      </div>
-
-        <div style="text-align: center; margin: 20px 0;">
-            <button id="startBtn">🎤 Start Listening</button>
-            <button id="stopBtn" disabled>⏹️ Stop</button>
-            <button id="clearBtn">🗑️ Clear All</button>
-            <button id="testSpeakerBtn">🔊 Test Speaker</button>
-        </div>
-
-        <div class="status" id="status">Click "Start Listening" to begin</div>
-
-        <div class="visualizer">
-            <div class="volume-history" id="volumeHistory"></div>
-            <div class="threshold-line" id="thresholdLine"></div>
-            <div class="current-indicator">← Current</div>
-        </div>
-
-        <div class="timing-display">
-            <div class="timing-item">
-                <div>Current Signal</div>
-                <div id="currentSignal">-</div>
-            </div>
-            <div class="timing-item">
-                <div>Signal Duration</div>
-                <div id="signalDuration">0ms</div>
-            </div>
-            <div class="timing-item">
-                <div>Gap Duration</div>
-                <div id="gapDuration">0ms</div>
-            </div>
-            <div class="timing-item">
-                <div>Last Symbol</div>
-                <div id="lastSymbol">-</div>
-            </div>
-        </div>
-
-        <div class="output-section">
-            <h3>
-                Current Morse Code:
-                <div class="history-controls">
-                    <button onclick="decoder.copyCurrentMorse()">📋 Copy</button>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="status-section">
+                <div class="permissions-status">
+                    <div class="status-item">
+                        <span>Microphone:</span> <span id="micStatus">Click Start to check</span>
+                    </div>
+                    <div class="status-item">
+                        <span>Text-to-Speech:</span> <span id="ttsStatus">Checking...</span>
+                    </div>
                 </div>
-            </h3>
-            <div class="output" id="morseOutput"></div>
-        </div>
-
-        <div class="output-section">
-            <h3>
-                Decoded Text:
-                <div class="history-controls">
-                    <button onclick="decoder.copyCurrentText()">📋 Copy</button>
-                    <button onclick="decoder.speakText()">🔊 Speak</button>
-                </div>
-            </h3>
-            <div class="output" id="textOutput"></div>
-        </div>
-
-        <div class="output-section">
-            <h3>
-                Morse Code History:
-                <div class="history-controls">
-                    <button onclick="decoder.clearHistory()">🗑️ Clear History</button>
-                    <button onclick="decoder.exportHistory()">📥 Export</button>
-                </div>
-            </h3>
-            <div class="output morse-history" id="historyOutput"></div>
-        </div>
-
-        <div class="morse-reference">
-            <h4>Morse Code Reference:</h4>
-            <div class="morse-grid">
-                <div class="morse-item">A: ·−</div>
-                <div class="morse-item">B: −···</div>
-                <div class="morse-item">C: −·−·</div>
-                <div class="morse-item">D: −··</div>
-                <div class="morse-item">E: ·</div>
-                <div class="morse-item">F: ··−·</div>
-                <div class="morse-item">G: −−·</div>
-                <div class="morse-item">H: ····</div>
-                <div class="morse-item">I: ··</div>
-                <div class="morse-item">J: ·−−−</div>
-                <div class="morse-item">K: −·−</div>
-                <div class="morse-item">L: ·−··</div>
-                <div class="morse-item">M: −−</div>
-                <div class="morse-item">N: −·</div>
-                <div class="morse-item">O: −−−</div>
-                <div class="morse-item">P: ·−−·</div>
-                <div class="morse-item">Q: −−·−</div>
-                <div class="morse-item">R: ·−·</div>
-                <div class="morse-item">S: ···</div>
-                <div class="morse-item">T: −</div>
-                <div class="morse-item">U: ··−</div>
-                <div class="morse-item">V: ···−</div>
-                <div class="morse-item">W: ·−−</div>
-                <div class="morse-item">X: −··−</div>
-                <div class="morse-item">Y: −·−−</div>
-                <div class="morse-item">Z: −−··</div>
-                <div class="morse-item">1: ·−−−−</div>
-                <div class="morse-item">2: ··−−−</div>
-                <div class="morse-item">3: ···−−</div>
-                <div class="morse-item">4: ····−</div>
-                <div class="morse-item">5: ·····</div>
-                <div class="morse-item">6: −····</div>
-                <div class="morse-item">7: −−···</div>
-                <div class="morse-item">8: −−−··</div>
-                <div class="morse-item">9: −−−−·</div>
-                <div class="morse-item">0: −−−−−</div>
+                <div class="current-status" id="status">Click "Start Listening" to begin</div>
             </div>
-        </div>
+
+            <div class="visualizer">
+                <div class="volume-history" id="volumeHistory"></div>
+                <div class="threshold-line" id="thresholdLine"></div>
+            </div>
+
+            <div class="timing-display">
+                <div class="timing-item">
+                    <div>Current Signal</div>
+                    <div class="timing-value" id="currentSignal">-</div>
+                </div>
+                <div class="timing-item">
+                    <div>Duration</div>
+                    <div class="timing-value" id="signalDuration">0ms</div>
+                </div>
+                <div class="timing-item">
+                    <div>Gap</div>
+                    <div class="timing-value" id="gapDuration">0ms</div>
+                </div>
+                <div class="timing-item">
+                    <div>Last Symbol</div>
+                    <div class="timing-value" id="lastSymbol">-</div>
+                </div>
+            </div>
+
+            <div class="output-container">
+                <div class="output-section">
+                    <div class="output-header">
+                        Morse Code
+                        <button class="output-btn" onclick="decoder.copyCurrentMorse()">Copy</button>
+                    </div>
+                    <div class="output-content" id="morseOutput"></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-header">
+                        Decoded Text
+                        <div>
+                            <button class="output-btn" onclick="decoder.copyCurrentText()">Copy</button>
+                            <button class="output-btn" onclick="decoder.speakText()">Speak</button>
+                        </div>
+                    </div>
+                    <div class="output-content" id="textOutput"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Morse Code Reference -->
+    <div class="morse-reference">
+        <div class="morse-grid" id="morseGrid"></div>
+    </div>
+    <div class="action-buttons">
+        <button class="action-btn start-btn" id="startBtn">Start Listening</button>
+        <button class="action-btn stop-btn" id="stopBtn" disabled>Stop</button>
+        <button class="action-btn clear-btn" id="clearBtn">Clear All</button>
+        <button class="action-btn speak-btn" id="speakTextBtn">Speak Text</button>
     </div>
 
     <script>
@@ -632,30 +834,33 @@
                 this.microphone = null;
                 this.dataArray = null;
                 this.isListening = false;
-                
+
                 this.threshold = 30;
-                this.dotLength = 200;
-                this.dashMultiplier = 2.5;
-                this.letterGap = 600;
-                this.wordGap = 1500;
-                
+                this.dotLength = 120;
+                this.dashMultiplier = 1.6;
+                this.letterGap = 650;
+                this.wordGap = 4000;
+
                 this.currentSignalStart = null;
                 this.currentGapStart = null;
                 this.isSignalActive = false;
                 this.morseBuffer = '';
                 this.currentLetter = '';
                 this.volumeHistory = [];
-                this.maxHistoryLength = 300;
+                this.maxHistoryLength = 200;
                 this.sessionHistory = [];
 
                 this.currentProfile = 1;
-this.profiles = {
-    1: { name: 'Profile 1', settings: null },
-    2: { name: 'Profile 2', settings: null },
-    3: { name: 'Profile 3', settings: null }
-};
-this.loadProfilesFromStorage();
-                
+                this.profiles = {
+                    1: { name: 'Profile 1', settings: null },
+                    2: { name: 'Profile 2', settings: null },
+                    3: { name: 'Profile 3', settings: null }
+                };
+
+                this.navbarRight = false;
+                this.mobileNavOpen = false;
+                this.currentSection = 'audio';
+
                 this.morseToText = {
                     '·−': 'A', '−···': 'B', '−·−·': 'C', '−··': 'D', '·': 'E',
                     '··−·': 'F', '−−·': 'G', '····': 'H', '··': 'I', '·−−−': 'J',
@@ -666,108 +871,281 @@ this.loadProfilesFromStorage();
                     '·····': '5', '−····': '6', '−−···': '7', '−−−··': '8', '−−−−·': '9',
                     '−−−−−': '0'
                 };
-                
-                this.presets = {
-                    breathing: { threshold: 15, dotLength: 400, dashMultiplier: 2.0, letterGap: 800, wordGap: 2000 },
-                    clicks: { threshold: 25, dotLength: 150, dashMultiplier: 2.5, letterGap: 500, wordGap: 1200 },
-                    vocal: { threshold: 35, dotLength: 200, dashMultiplier: 2.2, letterGap: 600, wordGap: 1500 },
-                    whistle: { threshold: 40, dotLength: 180, dashMultiplier: 2.8, letterGap: 550, wordGap: 1300 }
-                };
-                
+
                 this.initializeElements();
                 this.setupEventListeners();
+                this.loadState();
             }
-            
+
             initializeElements() {
                 this.elements = {
                     startBtn: document.getElementById('startBtn'),
                     stopBtn: document.getElementById('stopBtn'),
                     clearBtn: document.getElementById('clearBtn'),
-                    testSpeakerBtn: document.getElementById('testSpeakerBtn'),
+                    speakTextBtn: document.getElementById('speakTextBtn'),
                     status: document.getElementById('status'),
                     volumeHistory: document.getElementById('volumeHistory'),
                     thresholdLine: document.getElementById('thresholdLine'),
                     morseOutput: document.getElementById('morseOutput'),
                     textOutput: document.getElementById('textOutput'),
-                    historyOutput: document.getElementById('historyOutput'),
                     currentSignal: document.getElementById('currentSignal'),
                     signalDuration: document.getElementById('signalDuration'),
                     gapDuration: document.getElementById('gapDuration'),
                     lastSymbol: document.getElementById('lastSymbol'),
-                    currentVolume: document.getElementById('currentVolume'),
                     micStatus: document.getElementById('micStatus'),
                     ttsStatus: document.getElementById('ttsStatus'),
-                    threshold: document.getElementById('threshold'),
-                    thresholdValue: document.getElementById('thresholdValue'),
-                    dotLength: document.getElementById('dotLength'),
-                    dotLengthValue: document.getElementById('dotLengthValue'),
-                    dashMultiplier: document.getElementById('dashMultiplier'),
-                    dashMultiplierValue: document.getElementById('dashMultiplierValue'),
-                    letterGap: document.getElementById('letterGap'),
-                    letterGapValue: document.getElementById('letterGapValue'),
-                    wordGap: document.getElementById('wordGap'),
-                    wordGapValue: document.getElementById('wordGapValue')
+                    thresholdInput: document.getElementById('thresholdInput'),
+                    dotLengthInput: document.getElementById('dotLengthInput'),
+                    dashMultiplierInput: document.getElementById('dashMultiplierInput'),
+                    letterGapInput: document.getElementById('letterGapInput'),
+                    wordGapInput: document.getElementById('wordGapInput'),
+                    navbar: document.getElementById('navbar'),
+                    appContainer: document.getElementById('appContainer'),
+                    mobileNavToggle: document.getElementById('mobileNavToggle'),
+                    mobileOverlay: document.getElementById('mobileOverlay')
                 };
-                
-                this.checkTTSSupport();
-            }
-            saveState() {
-    const state = {
-        settings: this.getCurrentSettings(),
-        text: this.elements.textOutput.textContent,
-        morse: this.elements.morseOutput.textContent,
-        history: this.sessionHistory
-    };
-    localStorage.setItem("decoderState", JSON.stringify(state));
-}
 
-loadState() {
-    const state = JSON.parse(localStorage.getItem("decoderState") || "null");
-    if (state) {
-        this.applySettings(state.settings);
-        this.elements.textOutput.textContent = state.text || '';
-        this.elements.morseOutput.textContent = state.morse || '';
-        this.sessionHistory = state.history || [];
-        this.updateHistoryDisplay();
-    }
-}
+                this.updateSectionVisibility();
+                this.checkTTSSupport();
+                this.loadProfilesFromStorage();
+                this.generateMorseReference();
+            }
+
             setupEventListeners() {
                 this.elements.startBtn.addEventListener('click', () => this.startListening());
                 this.elements.stopBtn.addEventListener('click', () => this.stopListening());
                 this.elements.clearBtn.addEventListener('click', () => this.clearAll());
-                this.elements.testSpeakerBtn.addEventListener('click', () => this.testSpeaker());
-                
-                // Setup parameter controls
-                this.elements.threshold.addEventListener('input', (e) => {
-                    this.threshold = parseInt(e.target.value);
-                    this.elements.thresholdValue.textContent = this.threshold;
-                    this.updateThresholdLine();
-                });
-                
-                this.elements.dotLength.addEventListener('input', (e) => {
-                    this.dotLength = parseInt(e.target.value);
-                    this.elements.dotLengthValue.textContent = this.dotLength + 'ms';
-                });
-                
-                this.elements.dashMultiplier.addEventListener('input', (e) => {
-                    this.dashMultiplier = parseFloat(e.target.value);
-                    this.elements.dashMultiplierValue.textContent = this.dashMultiplier + 'x';
-                });
-                
-                this.elements.letterGap.addEventListener('input', (e) => {
-                    this.letterGap = parseInt(e.target.value);
-                    this.elements.letterGapValue.textContent = this.letterGap + 'ms';
-                });
-                
-                this.elements.wordGap.addEventListener('input', (e) => {
-                    this.wordGap = parseInt(e.target.value);
-                    this.elements.wordGapValue.textContent = this.wordGap + 'ms';
-                });
-                
+                this.elements.speakTextBtn.addEventListener('click', () => this.speakText());
+
                 this.updateThresholdLine();
                 window.addEventListener("beforeunload", () => this.saveState());
+
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth > 768) {
+                        this.closeMobileNav();
+                    }
+                });
             }
-            
+
+            // Settings Management
+            updateSetting(settingName, value) {
+                const numValue = parseFloat(value);
+                this[settingName] = numValue;
+
+                if (settingName === 'threshold') {
+                    this.updateThresholdLine();
+                }
+
+                this.updateSettingInputs();
+            }
+
+            adjustSetting(settingName, delta) {
+                const input = document.getElementById(settingName + 'Input');
+                const currentValue = parseFloat(input.value);
+                const min = parseFloat(input.min) || 0;
+                const max = parseFloat(input.max) || 9999;
+                const step = parseFloat(input.step) || 1;
+
+                let newValue = currentValue + delta;
+
+                // Round to appropriate decimal places
+                if (step < 1) {
+                    newValue = Math.round(newValue * 10) / 10;
+                } else {
+                    newValue = Math.round(newValue);
+                }
+
+                newValue = Math.max(min, Math.min(max, newValue));
+
+                input.value = newValue;
+                this.updateSetting(settingName, newValue);
+            }
+
+            updateSettingInputs() {
+                this.elements.thresholdInput.value = this.threshold;
+                this.elements.dotLengthInput.value = this.dotLength;
+                this.elements.dashMultiplierInput.value = this.dashMultiplier;
+                this.elements.letterGapInput.value = this.letterGap;
+                this.elements.wordGapInput.value = this.wordGap;
+            }
+
+            toggleNavbarSide() {
+                this.navbarRight = !this.navbarRight;
+                this.elements.appContainer.classList.toggle('navbar-right', this.navbarRight);
+                this.saveState();
+            }
+
+            toggleMobileNav() {
+                this.mobileNavOpen = !this.mobileNavOpen;
+                this.elements.navbar.classList.toggle('open', this.mobileNavOpen);
+                this.elements.mobileOverlay.classList.toggle('show', this.mobileNavOpen);
+            }
+
+            closeMobileNav() {
+                this.mobileNavOpen = false;
+                this.elements.navbar.classList.remove('open');
+                this.elements.mobileOverlay.classList.remove('show');
+            }
+
+            switchToSection(sectionName) {
+                this.currentSection = sectionName;
+                this.updateSectionVisibility();
+                this.updateSectionButtons();
+            }
+
+            updateSectionVisibility() {
+                const audioSection = document.getElementById('audioSection');
+                const profileSection = document.getElementById('profileSection');
+
+                audioSection.style.display = this.currentSection === 'audio' ? 'block' : 'none';
+                profileSection.style.display = this.currentSection === 'profiles' ? 'block' : 'none';
+            }
+
+            updateSectionButtons() {
+                const audioBtn = document.getElementById('audioSectionBtn');
+                const profileBtn = document.getElementById('profileSectionBtn');
+
+                audioBtn.classList.toggle('active', this.currentSection === 'audio');
+                profileBtn.classList.toggle('active', this.currentSection === 'profiles');
+            }
+
+            getCurrentSettings() {
+                return {
+                    threshold: this.threshold,
+                    dotLength: this.dotLength,
+                    dashMultiplier: this.dashMultiplier,
+                    letterGap: this.letterGap,
+                    wordGap: this.wordGap
+                };
+            }
+
+            applySettings(settings) {
+                this.threshold = settings.threshold;
+                this.dotLength = settings.dotLength;
+                this.dashMultiplier = settings.dashMultiplier;
+                this.letterGap = settings.letterGap;
+                this.wordGap = settings.wordGap;
+
+                this.updateSettingInputs();
+                this.updateThresholdLine();
+            }
+
+            loadProfile(profileNumber) {
+                this.currentProfile = profileNumber;
+                const profile = this.profiles[profileNumber];
+
+                if (profile.settings) {
+                    this.applySettings(profile.settings);
+                    this.elements.status.textContent = `Loaded profile: ${profile.name}`;
+                }
+
+                document.getElementById('profileName').value = profile.name;
+                this.updateProfileButtons();
+            }
+
+            saveCurrentProfile() {
+                const profileName = document.getElementById('profileName').value.trim() || `Profile ${this.currentProfile}`;
+
+                this.profiles[this.currentProfile] = {
+                    name: profileName,
+                    settings: this.getCurrentSettings()
+                };
+
+                this.saveProfilesToStorage();
+                this.updateProfileButtons();
+                this.elements.status.textContent = `Saved profile: ${profileName}`;
+            }
+
+            deleteCurrentProfile() {
+                const profile = this.profiles[this.currentProfile];
+
+                this.profiles[this.currentProfile] = {
+                    name: `Profile ${this.currentProfile}`,
+                    settings: null
+                };
+
+                document.getElementById('profileName').value = this.profiles[this.currentProfile].name;
+                this.saveProfilesToStorage();
+                this.updateProfileButtons();
+                this.elements.status.textContent = `Deleted profile: ${profile.name}`;
+            }
+
+            updateProfileButtons() {
+                for (let i = 1; i <= 3; i++) {
+                    const btn = document.getElementById(`profile${i}Btn`);
+                    const profile = this.profiles[i];
+
+                    btn.textContent = profile.name;
+                    btn.classList.toggle('active', i === this.currentProfile);
+                }
+            }
+
+            saveProfilesToStorage() {
+                try {
+                    const data = JSON.stringify(this.profiles);
+                    document.cookie = `morseProfiles=${data}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;
+                } catch (error) {
+                    console.error('Failed to save profiles:', error);
+                }
+            }
+
+            loadProfilesFromStorage() {
+                try {
+                    const cookies = document.cookie.split(';');
+                    const profileCookie = cookies.find(cookie => cookie.trim().startsWith('morseProfiles='));
+
+                    if (profileCookie) {
+                        const data = profileCookie.split('=')[1];
+                        this.profiles = JSON.parse(data);
+                    }
+
+                    this.updateProfileButtons();
+                } catch (error) {
+                    console.error('Failed to load profiles:', error);
+                }
+            }
+
+            // State Management
+            saveState() {
+                const state = {
+                    settings: this.getCurrentSettings(),
+                    text: this.elements.textOutput.textContent,
+                    morse: this.elements.morseOutput.textContent,
+                    history: this.sessionHistory,
+                    navbarRight: this.navbarRight,
+                    currentProfile: this.currentProfile
+                };
+                localStorage.setItem("decoderState", JSON.stringify(state));
+            }
+
+            loadState() {
+                const state = JSON.parse(localStorage.getItem("decoderState") || "null");
+                if (state) {
+                    this.applySettings(state.settings);
+                    this.elements.textOutput.textContent = state.text || '';
+                    this.elements.morseOutput.textContent = state.morse || '';
+                    this.sessionHistory = state.history || [];
+
+                    if (state.navbarRight) {
+                        this.navbarRight = state.navbarRight;
+                        this.elements.appContainer.classList.toggle('navbar-right', this.navbarRight);
+                    }
+
+                    if (state.currentProfile) {
+                        this.currentProfile = state.currentProfile;
+                        this.updateProfileButtons();
+                    }
+                }
+
+                // Load first available profile if none loaded
+                for (let i = 1; i <= 3; i++) {
+                    if (this.profiles[i] && this.profiles[i].settings && !state) {
+                        this.loadProfile(i);
+                        break;
+                    }
+                }
+            }
+
             checkTTSSupport() {
                 if ('speechSynthesis' in window) {
                     this.elements.ttsStatus.textContent = 'Available';
@@ -777,90 +1155,98 @@ loadState() {
                     this.elements.ttsStatus.className = 'status-denied';
                 }
             }
-            
+
             testSpeaker() {
                 if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance('Test message: The Morse code decoder is working correctly. You should hear this message clearly.');
+                    const utterance = new SpeechSynthesisUtterance('Test message: The Morse code decoder is working correctly.');
                     utterance.rate = 0.8;
                     utterance.pitch = 1;
                     utterance.volume = 0.8;
                     speechSynthesis.speak(utterance);
-                    this.elements.status.textContent = '🔊 Playing test message through speakers...';
-                    
+                    this.elements.status.textContent = 'Playing test message through speakers...';
+
                     utterance.onend = () => {
-                        this.elements.status.textContent = '✅ Speaker test completed';
+                        this.elements.status.textContent = 'Speaker test completed';
                     };
-                    
+
                     utterance.onerror = () => {
-                        this.elements.status.textContent = '❌ Speaker test failed';
+                        this.elements.status.textContent = 'Speaker test failed';
                     };
                 } else {
-                    this.elements.status.textContent = '❌ Text-to-speech not available in this browser';
+                    this.elements.status.textContent = 'Text-to-speech not available in this browser';
                 }
             }
-            
+
             updateThresholdLine() {
                 const percentage = this.threshold;
                 this.elements.thresholdLine.style.bottom = percentage + '%';
             }
-            
-            playTestSound() {
-                if (!this.audioContext) return;
-                
-                const oscillator = this.audioContext.createOscillator();
-                const gainNode = this.audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(this.audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(800, this.audioContext.currentTime);
-                gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-                
-                oscillator.start();
-                oscillator.stop(this.audioContext.currentTime + 0.2);
-                
-                this.elements.status.textContent = '🔊 Test sound played - check if volume bar responds';
+
+            generateMorseReference() {
+                const morseGrid = document.getElementById('morseGrid');
+                morseGrid.innerHTML = '';
+
+                // Sort the morse codes by letter for better layout
+                const sortedMorse = Object.entries(this.morseToText).sort((a, b) => a[1].localeCompare(b[1]));
+
+                sortedMorse.forEach(([morseCode, letter]) => {
+                    const morseChar = document.createElement('div');
+                    morseChar.className = 'morse-char';
+                    morseChar.setAttribute('data-char', letter);
+
+                    const morsePattern = document.createElement('div');
+                    morsePattern.className = 'morse-pattern';
+                    morsePattern.textContent = morseCode;
+
+                    const morseLetterDiv = document.createElement('div');
+                    morseLetterDiv.className = 'morse-letter';
+                    morseLetterDiv.textContent = letter;
+
+                    morseChar.appendChild(morsePattern);
+                    morseChar.appendChild(morseLetterDiv);
+                    morseGrid.appendChild(morseChar);
+                });
             }
-            
+
             async startListening() {
                 try {
                     this.elements.micStatus.textContent = 'Requesting...';
                     this.elements.micStatus.className = 'status-prompt';
-                    
-                    const stream = await navigator.mediaDevices.getUserMedia({ 
-                        audio: { 
+
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        audio: {
                             echoCancellation: false,
                             noiseSuppression: false,
                             autoGainControl: false
-                        } 
+                        }
                     });
-                    
+
                     this.elements.micStatus.textContent = 'Granted';
                     this.elements.micStatus.className = 'status-granted';
-                    
+
                     this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
                     this.analyser = this.audioContext.createAnalyser();
                     this.microphone = this.audioContext.createMediaStreamSource(stream);
-                    
+
                     this.analyser.fftSize = 256;
                     this.analyser.smoothingTimeConstant = 0.3;
                     this.microphone.connect(this.analyser);
                     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
-                    
+
                     this.isListening = true;
                     this.elements.startBtn.disabled = true;
                     this.elements.stopBtn.disabled = false;
-                    this.elements.status.textContent = '🎤 Listening... Make sounds to generate Morse code';
-                    
+                    this.elements.status.textContent = 'Listening... Make sounds to generate Morse code';
+
                     this.analyze();
                 } catch (error) {
                     console.error('Error accessing microphone:', error);
                     this.elements.micStatus.textContent = 'Denied';
                     this.elements.micStatus.className = 'status-denied';
-                    this.elements.status.textContent = '❌ Microphone access denied. Please allow microphone access and refresh the page.';
+                    this.elements.status.textContent = 'Microphone access denied. Please allow microphone access and refresh the page.';
                 }
             }
-            
+
             stopListening() {
                 this.isListening = false;
                 if (this.audioContext) {
@@ -868,10 +1254,10 @@ loadState() {
                 }
                 this.elements.startBtn.disabled = false;
                 this.elements.stopBtn.disabled = true;
-                this.elements.status.textContent = '⏹️ Stopped listening';
+                this.elements.status.textContent = 'Stopped listening';
                 this.processEndOfInput();
             }
-            
+
             clearAll() {
                 this.elements.morseOutput.textContent = '';
                 this.elements.textOutput.textContent = '';
@@ -884,39 +1270,30 @@ loadState() {
                 this.volumeHistory = [];
                 this.updateVolumeHistory();
             }
-            
-            clearHistory() {
-                this.sessionHistory = [];
-                this.elements.historyOutput.innerHTML = '';
-            }
-            
+
             analyze() {
                 if (!this.isListening) return;
-                
+
                 this.analyser.getByteFrequencyData(this.dataArray);
-                
-                // Calculate RMS (Root Mean Square) for better volume detection
+
                 let sum = 0;
                 for (let i = 0; i < this.dataArray.length; i++) {
                     sum += this.dataArray[i] * this.dataArray[i];
                 }
                 const rms = Math.sqrt(sum / this.dataArray.length);
                 const volume = (rms / 255) * 100;
-                
-                // Add to volume history
+
                 this.volumeHistory.push(volume);
                 if (this.volumeHistory.length > this.maxHistoryLength) {
                     this.volumeHistory.shift();
                 }
-                
+
                 this.updateVolumeHistory();
-                this.elements.currentVolume.textContent = Math.round(volume);
-                
+
                 const now = Date.now();
                 const isAboveThreshold = volume > this.threshold;
-                
+
                 if (isAboveThreshold && !this.isSignalActive) {
-                    // Signal started
                     this.isSignalActive = true;
                     this.currentSignalStart = now;
                     if (this.currentGapStart) {
@@ -924,9 +1301,8 @@ loadState() {
                         this.elements.gapDuration.textContent = gapDuration + 'ms';
                         this.processGap(gapDuration);
                     }
-                    this.elements.currentSignal.textContent = '🔊 Signal';
+                    this.elements.currentSignal.textContent = 'Signal';
                 } else if (!isAboveThreshold && this.isSignalActive) {
-                    // Signal ended
                     this.isSignalActive = false;
                     this.currentGapStart = now;
                     if (this.currentSignalStart) {
@@ -934,22 +1310,21 @@ loadState() {
                         this.elements.signalDuration.textContent = signalDuration + 'ms';
                         this.processSignal(signalDuration);
                     }
-                    this.elements.currentSignal.textContent = '🔇 Gap';
+                    this.elements.currentSignal.textContent = 'Gap';
                 }
-                
-                // Update current durations in real time
+
                 if (this.isSignalActive && this.currentSignalStart) {
                     this.elements.signalDuration.textContent = (now - this.currentSignalStart) + 'ms';
                 } else if (!this.isSignalActive && this.currentGapStart) {
                     this.elements.gapDuration.textContent = (now - this.currentGapStart) + 'ms';
                 }
-                
+
                 requestAnimationFrame(() => this.analyze());
             }
-            
+
             updateVolumeHistory() {
                 this.elements.volumeHistory.innerHTML = '';
-                
+
                 this.volumeHistory.forEach(volume => {
                     const bar = document.createElement('div');
                     bar.className = 'volume-bar-history';
@@ -957,7 +1332,7 @@ loadState() {
                     this.elements.volumeHistory.appendChild(bar);
                 });
             }
-            
+
             processSignal(duration) {
                 const dashThreshold = this.dotLength * this.dashMultiplier;
                 const symbol = duration >= dashThreshold ? '−' : '·';
@@ -965,19 +1340,17 @@ loadState() {
                 this.elements.lastSymbol.textContent = symbol + ` (${duration}ms)`;
                 this.updateMorseOutput();
             }
-            
+
             processGap(duration) {
                 if (duration >= this.wordGap) {
-                    // Word gap
                     this.processLetter();
                     this.addSpace();
                     this.saveToHistory();
                 } else if (duration >= this.letterGap) {
-                    // Letter gap
                     this.processLetter();
                 }
             }
-            
+
             processLetter() {
                 if (this.currentLetter) {
                     const letter = this.morseToText[this.currentLetter] || '?';
@@ -986,21 +1359,20 @@ loadState() {
                     this.updateMorseOutput();
                 }
             }
-            
+
             addSpace() {
                 this.elements.textOutput.textContent += ' ';
             }
-            
+
             processEndOfInput() {
                 if (this.currentLetter) {
                     this.processLetter();
                 }
                 this.saveToHistory();
             }
-            
+
             updateMorseOutput() {
                 let output = this.elements.morseOutput.textContent;
-                // Remove the last incomplete letter and add the current one
                 const lastSpaceIndex = output.lastIndexOf(' ');
                 if (lastSpaceIndex !== -1) {
                     output = output.substring(0, lastSpaceIndex + 1);
@@ -1009,15 +1381,13 @@ loadState() {
                 }
                 output += this.currentLetter;
                 this.elements.morseOutput.textContent = output;
-                
-                // Auto-scroll to bottom
                 this.elements.morseOutput.scrollTop = this.elements.morseOutput.scrollHeight;
             }
-            
+
             saveToHistory() {
                 const morseCode = this.elements.morseOutput.textContent.trim();
                 const text = this.elements.textOutput.textContent.trim();
-                
+
                 if (morseCode || text) {
                     const timestamp = new Date().toLocaleTimeString();
                     this.sessionHistory.push({
@@ -1025,64 +1395,31 @@ loadState() {
                         morse: morseCode,
                         text: text
                     });
-                    
-                    this.updateHistoryDisplay();
                 }
             }
-            
-            updateHistoryDisplay() {
-                this.elements.historyOutput.innerHTML = '';
-                
-                this.sessionHistory.forEach((entry, index) => {
-                    const historyItem = document.createElement('div');
-                    historyItem.className = 'history-item';
-                    historyItem.innerHTML = `
-                        <div>
-                            <div><strong>${entry.text || 'No translation'}</strong></div>
-                            <div style="font-size: 0.8em; color: #ccc;">${entry.morse || 'No morse code'}</div>
-                        </div>
-                        <div class="timestamp">${entry.timestamp}</div>
-                    `;
-                    
-                    historyItem.addEventListener('click', () => {
-                        this.restoreFromHistory(entry);
-                    });
-                    
-                    this.elements.historyOutput.appendChild(historyItem);
-                });
-                
-                // Auto-scroll to bottom
-                this.elements.historyOutput.scrollTop = this.elements.historyOutput.scrollHeight;
-            }
-            
-            restoreFromHistory(entry) {
-                this.elements.morseOutput.textContent = entry.morse;
-                this.elements.textOutput.textContent = entry.text;
-                this.elements.status.textContent = `Restored from history: ${entry.timestamp}`;
-            }
-            
+
             copyCurrentMorse() {
                 const text = this.elements.morseOutput.textContent;
                 if (text) {
                     navigator.clipboard.writeText(text).then(() => {
-                        this.elements.status.textContent = '📋 Morse code copied to clipboard';
+                        this.elements.status.textContent = 'Morse code copied to clipboard';
                     }).catch(() => {
-                        this.elements.status.textContent = '❌ Failed to copy morse code';
+                        this.elements.status.textContent = 'Failed to copy morse code';
                     });
                 }
             }
-            
+
             copyCurrentText() {
                 const text = this.elements.textOutput.textContent;
                 if (text) {
                     navigator.clipboard.writeText(text).then(() => {
-                        this.elements.status.textContent = '📋 Text copied to clipboard';
+                        this.elements.status.textContent = 'Text copied to clipboard';
                     }).catch(() => {
-                        this.elements.status.textContent = '❌ Failed to copy text';
+                        this.elements.status.textContent = 'Failed to copy text';
                     });
                 }
             }
-            
+
             speakText() {
                 const text = this.elements.textOutput.textContent;
                 if (text && 'speechSynthesis' in window) {
@@ -1090,28 +1427,36 @@ loadState() {
                     utterance.rate = 0.8;
                     utterance.pitch = 1;
                     speechSynthesis.speak(utterance);
-                    this.elements.status.textContent = '🔊 Speaking decoded text...';
+                    this.elements.status.textContent = 'Speaking decoded text...';
+
+                    utterance.onend = () => {
+                        this.elements.status.textContent = 'Finished speaking text';
+                    };
+
+                    utterance.onerror = () => {
+                        this.elements.status.textContent = 'Error speaking text';
+                    };
                 } else {
-                    this.elements.status.textContent = '❌ Speech synthesis not available';
+                    this.elements.status.textContent = 'Speech synthesis not available';
                 }
             }
-            
+
             exportHistory() {
                 if (this.sessionHistory.length === 0) {
-                    this.elements.status.textContent = '❌ No history to export';
+                    this.elements.status.textContent = 'No history to export';
                     return;
                 }
-                
+
                 let exportData = 'Morse Code Session History\n';
                 exportData += '================================\n\n';
-                
+
                 this.sessionHistory.forEach((entry, index) => {
                     exportData += `Entry ${index + 1} - ${entry.timestamp}\n`;
                     exportData += `Text: ${entry.text || 'No translation'}\n`;
                     exportData += `Morse: ${entry.morse || 'No morse code'}\n`;
                     exportData += '---\n\n';
                 });
-                
+
                 const blob = new Blob([exportData], { type: 'text/plain' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -1121,131 +1466,22 @@ loadState() {
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                
-                this.elements.status.textContent = '📥 History exported successfully';
+
+                this.elements.status.textContent = 'History exported successfully';
             }
-            getCurrentSettings() {
-    return {
-        threshold: this.threshold,
-        dotLength: this.dotLength,
-        dashMultiplier: this.dashMultiplier,
-        letterGap: this.letterGap,
-        wordGap: this.wordGap
-    };
-}
 
-applySettings(settings) {
-    this.threshold = settings.threshold;
-    this.dotLength = settings.dotLength;
-    this.dashMultiplier = settings.dashMultiplier;
-    this.letterGap = settings.letterGap;
-    this.wordGap = settings.wordGap;
-    
-    // Update UI
-    this.elements.threshold.value = this.threshold;
-    this.elements.thresholdValue.textContent = this.threshold;
-    this.elements.dotLength.value = this.dotLength;
-    this.elements.dotLengthValue.textContent = this.dotLength + 'ms';
-    this.elements.dashMultiplier.value = this.dashMultiplier;
-    this.elements.dashMultiplierValue.textContent = this.dashMultiplier + 'x';
-    this.elements.letterGap.value = this.letterGap;
-    this.elements.letterGapValue.textContent = this.letterGap + 'ms';
-    this.elements.wordGap.value = this.wordGap;
-    this.elements.wordGapValue.textContent = this.wordGap + 'ms';
-    
-    this.updateThresholdLine();
-}
-
-loadProfile(profileNumber) {
-    this.currentProfile = profileNumber;
-    const profile = this.profiles[profileNumber];
-    
-    if (profile.settings) {
-        this.applySettings(profile.settings);
-        this.elements.status.textContent = `Loaded profile: ${profile.name}`;
-    }
-    
-    document.getElementById('profileName').value = profile.name;
-    this.updateProfileButtons();
-}
-
-saveCurrentProfile() {
-    const profileName = document.getElementById('profileName').value.trim() || `Profile ${this.currentProfile}`;
-    
-    this.profiles[this.currentProfile] = {
-        name: profileName,
-        settings: this.getCurrentSettings()
-    };
-    
-    this.saveProfilesToStorage();
-    this.updateProfileButtons();
-    this.elements.status.textContent = `Saved profile: ${profileName}`;
-}
-
-deleteCurrentProfile() {
-    const profile = this.profiles[this.currentProfile];
-    
-    this.profiles[this.currentProfile] = {
-        name: `Profile ${this.currentProfile}`,
-        settings: null
-    };
-    
-    document.getElementById('profileName').value = this.profiles[this.currentProfile].name;
-    this.saveProfilesToStorage();
-    this.updateProfileButtons();
-    this.elements.status.textContent = `Deleted profile: ${profile.name}`;
-}
-
-updateProfileButtons() {
-    for (let i = 1; i <= 3; i++) {
-        const btn = document.getElementById(`profile${i}Btn`);
-        const profile = this.profiles[i];
-        
-        btn.textContent = profile.name;
-        btn.classList.toggle('active', i === this.currentProfile);
-    }
-}
-
-saveProfilesToStorage() {
-    try {
-        const data = JSON.stringify(this.profiles);
-        document.cookie = `morseProfiles=${data}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;
-    } catch (error) {
-        console.error('Failed to save profiles:', error);
-    }
-}
-
-loadProfilesFromStorage() {
-    try {
-        const cookies = document.cookie.split(';');
-        const profileCookie = cookies.find(cookie => cookie.trim().startsWith('morseProfiles='));
-        
-        if (profileCookie) {
-            const data = profileCookie.split('=')[1];
-            this.profiles = JSON.parse(data);
-        }
-        
-        // Load the first available profile or Profile 1
-        for (let i = 1; i <= 3; i++) {
-            if (this.profiles[i] && this.profiles[i].settings) {
-                this.loadProfile(i);
-                break;
+            clearHistory() {
+                this.sessionHistory = [];
+                this.elements.status.textContent = 'History cleared';
             }
         }
-        
-        this.updateProfileButtons();
-    } catch (error) {
-        console.error('Failed to load profiles:', error);
-    }
-}
-        }
-        
+
         // Initialize the decoder when the page loads
         let decoder;
         document.addEventListener('DOMContentLoaded', () => {
             decoder = new AccessibleMorseDecoder();
-            decoder.loadState();
         });
     </script>
 </body>
+
 </html>
