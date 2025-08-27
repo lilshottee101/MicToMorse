@@ -256,12 +256,12 @@
 
         /* Main Content */
         .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            padding-bottom: 100px;
-        }
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    padding-bottom: 180px;
+}
 
         .status-section {
             background: rgba(255, 255, 255, 0.1);
@@ -391,17 +391,18 @@
         }
 
         .action-buttons {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            display: flex;
-            gap: 15px;
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
-        }
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    display: flex;
+    gap: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    height: 90px;
+}
 
         .action-btn {
             flex: 1;
@@ -529,6 +530,22 @@
             }
         }
 
+        .morse-reference {
+        left: 10px;
+        right: 10px;
+        bottom: 150px; /* More space on mobile for wrapped buttons */
+        padding: 8px 10px;
+    }
+    
+    .app-container.navbar-right .morse-reference {
+        left: 10px;
+        right: 10px;
+    }
+    
+    .main-content {
+        padding-bottom: 220px; /* More space on mobile */
+    }
+    
         /* Timing Display */
         .timing-display {
             display: grid;
@@ -549,6 +566,84 @@
             font-weight: bold;
             font-size: 1.1em;
             margin-top: 4px;
+        }
+
+        .morse-reference {
+    position: fixed;
+    bottom: 100px; /* Above the action buttons */
+    left: 320px; /* Account for navbar width + padding */
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 10px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    z-index: 100;
+}
+
+.app-container.navbar-right .morse-reference {
+    left: 20px;
+    right: 320px;
+}
+
+        .morse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 8px;
+        }
+
+        .morse-char {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .morse-char:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .morse-char.active {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+
+        .morse-pattern {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 4px;
+        }
+
+        .morse-letter {
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .morse-grid {
+                grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+                gap: 6px;
+            }
+
+            .morse-char {
+                padding: 6px;
+            }
+
+            .morse-pattern {
+                font-size: 0.8em;
+            }
+
+            .morse-letter {
+                font-size: 0.7em;
+            }
         }
     </style>
 </head>
@@ -604,7 +699,7 @@
                             <div class="setting-control">
                                 <button class="setting-btn"
                                     onclick="decoder.adjustSetting('dashMultiplier', -0.1)">−</button>
-                                <input type="number" class="setting-input" id="dashMultiplierInput" min="1.5" max="5"
+                                <input type="number" class="setting-input" id="dashMultiplierInput" min="1.1" max="5"
                                     step="0.1" value="2.5"
                                     onchange="decoder.updateSetting('dashMultiplier', this.value)">
                                 <button class="setting-btn"
@@ -720,7 +815,10 @@
             </div>
         </main>
     </div>
-
+    <!-- Morse Code Reference -->
+    <div class="morse-reference">
+        <div class="morse-grid" id="morseGrid"></div>
+    </div>
     <div class="action-buttons">
         <button class="action-btn start-btn" id="startBtn">Start Listening</button>
         <button class="action-btn stop-btn" id="stopBtn" disabled>Stop</button>
@@ -738,10 +836,10 @@
                 this.isListening = false;
 
                 this.threshold = 30;
-                this.dotLength = 200;
-                this.dashMultiplier = 2.5;
-                this.letterGap = 600;
-                this.wordGap = 1500;
+                this.dotLength = 120;
+                this.dashMultiplier = 1.6;
+                this.letterGap = 650;
+                this.wordGap = 4000;
 
                 this.currentSignalStart = null;
                 this.currentGapStart = null;
@@ -810,6 +908,7 @@
                 this.updateSectionVisibility();
                 this.checkTTSSupport();
                 this.loadProfilesFromStorage();
+                this.generateMorseReference();
             }
 
             setupEventListeners() {
@@ -1081,6 +1180,32 @@
             updateThresholdLine() {
                 const percentage = this.threshold;
                 this.elements.thresholdLine.style.bottom = percentage + '%';
+            }
+
+            generateMorseReference() {
+                const morseGrid = document.getElementById('morseGrid');
+                morseGrid.innerHTML = '';
+
+                // Sort the morse codes by letter for better layout
+                const sortedMorse = Object.entries(this.morseToText).sort((a, b) => a[1].localeCompare(b[1]));
+
+                sortedMorse.forEach(([morseCode, letter]) => {
+                    const morseChar = document.createElement('div');
+                    morseChar.className = 'morse-char';
+                    morseChar.setAttribute('data-char', letter);
+
+                    const morsePattern = document.createElement('div');
+                    morsePattern.className = 'morse-pattern';
+                    morsePattern.textContent = morseCode;
+
+                    const morseLetterDiv = document.createElement('div');
+                    morseLetterDiv.className = 'morse-letter';
+                    morseLetterDiv.textContent = letter;
+
+                    morseChar.appendChild(morsePattern);
+                    morseChar.appendChild(morseLetterDiv);
+                    morseGrid.appendChild(morseChar);
+                });
             }
 
             async startListening() {
