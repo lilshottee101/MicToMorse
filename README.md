@@ -21,6 +21,19 @@ No installation is required — just open the link in your browser, allow microp
 
 ---
 
+## 🗺️ Roadmap
+
+### Bug Fixes
+
+* [ ] Last letter not displaying until new letter is started
+
+### Features
+
+* [ ] Auto adjust volume threshold
+* [ ] More accessible UI
+
+---
+
 ## 🚀 Getting Started
 
 ### Option 1: Use the Live Demo
