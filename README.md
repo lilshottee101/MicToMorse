@@ -47,7 +47,7 @@ Clone the repository:
 ```bash
 git clone https://github.com/yourusername/MicToMorse.git
 cd MicToMorse
-
+```
 ---
 
 ## 📬 Issues & Pull Requests
