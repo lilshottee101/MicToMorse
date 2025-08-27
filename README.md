@@ -26,11 +26,13 @@ No installation is required — just open the link in your browser, allow microp
 ### Bug Fixes
 
 * [ ] Last letter not displaying until new letter is started
+* [ ] Max at 5 characters
 
 ### Features
 
 * [ ] Auto adjust volume threshold
 * [ ] More accessible UI
+* [ ] Option to say what you wrote without clicking a button. EG: once a known word is made TTS the word
 
 ---
 
