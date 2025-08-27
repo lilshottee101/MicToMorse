@@ -1,6 +1,6 @@
 # MicToMorse
 
-MicToMorse is an accessibility-focused project designed to help people with disabilities — such as quadriplegics who do not have the ability to speak — communicate by making simple sounds into a microphone. These sounds are converted into **Morse code (dots and dashes)** and then translated into **text**, with an optional **push-to-speak** feature for voice output.
+MicToMorse is an accessibility-focused project designed to help people with disabilities, such as quadriplegics who do not have the ability to speak, communicate by making simple sounds into a microphone. These sounds are converted into **Morse code (dots and dashes)** and then translated into **text**, with an optional **push-to-speak** feature for voice output.
 
 ---
 
@@ -8,7 +8,7 @@ MicToMorse is an accessibility-focused project designed to help people with disa
 A public version of the project is available here:  
 👉 [MicToMorse Live](https://mictomorse.pages.dev)
 
-No installation is required — just open the link in your browser, allow microphone access, and start communicating.
+No installation is required - just open the link in your browser, allow microphone access, and start communicating.
 
 ---
 
