@@ -31,9 +31,9 @@ No installation is required — just open the link in your browser, allow microp
 ### Features
 
 * [ ] Auto adjust volume threshold
-* [ ] More accessible UI
 * [ ] Option to say what you wrote without clicking a button. EG: once a known word is made TTS the word
 * [ ] Option to create short cuts for works EG: TK = Thanks
+* [x] More accessible UI
 
 ---
 
