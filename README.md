@@ -32,3 +32,13 @@ Clone the repository:
 ```bash
 git clone https://github.com/yourusername/MicToMorse.git
 cd MicToMorse
+
+---
+
+## 📬 Issues & Pull Requests
+
+I actively keep on top of **Issues** and **Pull Requests**.
+
+- If you find a **bug**, please open an issue with clear steps to reproduce it.  
+- If you have an **idea for a feature**, feel free to suggest it through an issue.  
+- If you’d like to **contribute code**, open a pull request — I’ll review and respond as quickly as possible.  
