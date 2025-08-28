@@ -189,6 +189,58 @@
             transform: scale(0.95);
         }
 
+        .setting-toggle {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .setting-toggle.active {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 3px;
+            transition: left 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .setting-toggle.active .toggle-slider {
+            left: calc(100% - 36px);
+        }
+
+        .toggle-text {
+            color: white;
+            font-weight: bold;
+            font-size: 1em;
+            z-index: 1;
+            position: relative;
+        }
+
+        .setting-toggle:hover {
+            transform: scale(1.02);
+        }
+
+        .setting-toggle:active {
+            transform: scale(0.98);
+        }
+
         /* Profile Section */
         .profile-buttons {
             display: flex;
@@ -254,14 +306,34 @@
             color: white;
         }
 
+        .morse-char.exact-match {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            border-color: #ffd700;
+            color: #333;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            transform: scale(1.05);
+        }
+
+        .morse-char.exact-match .morse-pattern,
+        .morse-char.exact-match .morse-letter {
+            color: #333;
+        }
+
+        .morse-char.partial-match {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 237, 78, 0.3));
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: scale(1.02);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+        }
+
         /* Main Content */
         .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    padding-bottom: 180px;
-}
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            padding-bottom: 180px;
+        }
 
         .status-section {
             background: rgba(255, 255, 255, 0.1);
@@ -391,18 +463,18 @@
         }
 
         .action-buttons {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 15px 20px;
-    display: flex;
-    gap: 15px;
-    border-top: 2px solid rgba(255, 255, 255, 0.2);
-    height: 90px;
-}
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            gap: 15px;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            height: 90px;
+        }
 
         .action-btn {
             flex: 1;
@@ -531,21 +603,23 @@
         }
 
         .morse-reference {
-        left: 10px;
-        right: 10px;
-        bottom: 150px; /* More space on mobile for wrapped buttons */
-        padding: 8px 10px;
-    }
-    
-    .app-container.navbar-right .morse-reference {
-        left: 10px;
-        right: 10px;
-    }
-    
-    .main-content {
-        padding-bottom: 220px; /* More space on mobile */
-    }
-    
+            left: 10px;
+            right: 10px;
+            bottom: 150px;
+            /* More space on mobile for wrapped buttons */
+            padding: 8px 10px;
+        }
+
+        .app-container.navbar-right .morse-reference {
+            left: 10px;
+            right: 10px;
+        }
+
+        .main-content {
+            padding-bottom: 220px;
+            /* More space on mobile */
+        }
+
         /* Timing Display */
         .timing-display {
             display: grid;
@@ -568,23 +642,408 @@
             margin-top: 4px;
         }
 
-        .morse-reference {
-    position: fixed;
-    bottom: 100px; /* Above the action buttons */
-    left: 320px; /* Account for navbar width + padding */
-    right: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    border-radius: 10px;
-    padding: 10px 15px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    z-index: 100;
-}
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
 
-.app-container.navbar-right .morse-reference {
-    left: 20px;
-    right: 320px;
-}
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2vh 2vw;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            border-radius: 15px;
+            width: 100%;
+            height: 100%;
+            max-width: min(95vw, 1200px);
+            max-height: min(95vh, 900px);
+            min-width: min(90vw, 800px);
+            min-height: min(80vh, 600px);
+            display: flex;
+            flex-direction: column;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-header h3 {
+            color: #ffd700;
+            font-size: clamp(1.2em, 2.5vw, 1.5em);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            padding: 8px 12px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            gap: clamp(20px, 3vw, 40px);
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        /* Responsive layout for narrow screens */
+        @media (max-aspect-ratio: 4/3) {
+            .modal-body {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        .shortcuts-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            min-width: 0;
+        }
+
+        .shortcuts-section h4 {
+            color: #4ecdc4;
+            margin-bottom: 15px;
+            font-size: clamp(1em, 2vw, 1.3em);
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .shortcuts-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .shortcuts-list {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            min-height: 0;
+        }
+
+        .shortcut-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .shortcut-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .shortcut-key {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #ffd700;
+            font-size: clamp(0.9em, 1.5vw, 1.1em);
+            min-width: clamp(80px, 15vw, 150px);
+            word-break: break-all;
+            flex-shrink: 0;
+        }
+
+        .shortcut-value {
+            flex: 1;
+            margin: 0 15px;
+            color: white;
+            font-size: clamp(0.85em, 1.2vw, 1em);
+            word-break: break-word;
+        }
+
+        .shortcut-delete {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: clamp(0.8em, 1vw, 0.9em);
+            font-weight: bold;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            min-height: 32px;
+        }
+
+        .shortcut-delete:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+        }
+
+        .add-shortcut {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .add-shortcut input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: clamp(0.85em, 1.2vw, 1em);
+            font-weight: 500;
+            min-height: 40px;
+        }
+
+        .add-shortcut input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+
+        .add-shortcut button {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: clamp(0.85em, 1.2vw, 1em);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            min-height: 40px;
+        }
+
+        .add-shortcut button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .restore-defaults-btn,
+        .save-shortcuts-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: clamp(0.9em, 1.5vw, 1.1em);
+            transition: all 0.3s ease;
+            min-width: clamp(120px, 20vw, 150px);
+            min-height: 44px;
+        }
+
+        .restore-defaults-btn {
+            background: linear-gradient(45deg, #6f42c1, #e83e8c);
+            color: white;
+        }
+
+        .save-shortcuts-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .restore-defaults-btn:hover,
+        .save-shortcuts-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Vertical/narrow screen adaptations */
+        @media (max-width: 768px) or (max-aspect-ratio: 4/3) {
+            .modal-content {
+                min-width: 90vw;
+                min-height: 85vh;
+            }
+
+            .add-shortcut {
+                flex-wrap: wrap;
+            }
+
+            .add-shortcut input {
+                min-width: 0;
+                flex-basis: calc(50% - 4px);
+            }
+
+            .add-shortcut button {
+                flex-basis: 100%;
+                margin-top: 8px;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .restore-defaults-btn,
+            .save-shortcuts-btn {
+                width: 100%;
+            }
+        }
+
+        /* Very narrow screens */
+        @media (max-width: 480px) {
+            .shortcut-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 12px;
+            }
+
+            .shortcut-key,
+            .shortcut-value {
+                margin: 0;
+                width: 100%;
+            }
+
+            .shortcut-delete {
+                align-self: flex-end;
+                margin-top: 8px;
+            }
+
+            .add-shortcut input {
+                flex-basis: 100%;
+            }
+        }
+
+        .shortcuts-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .pagination-info {
+            color: #ffd700;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .pagination-btn {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-height: 32px;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(78, 205, 196, 0.3);
+        }
+
+        .pagination-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .shortcuts-list {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            height: 300px;
+            /* Fixed height to prevent scrolling */
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .morse-reference {
+            position: fixed;
+            bottom: 100px;
+            /* Above the action buttons */
+            left: 320px;
+            /* Account for navbar width + padding */
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            z-index: 100;
+        }
+
+        .app-container.navbar-right .morse-reference {
+            left: 20px;
+            right: 320px;
+        }
 
         .morse-grid {
             display: grid;
@@ -659,7 +1118,7 @@
         <nav class="navbar" id="navbar">
             <div class="navbar-header">
                 <div class="navbar-title">Settings</div>
-                <button class="navbar-toggle" onclick="decoder.toggleNavbarSide()">Switch Side</button>
+                <button class="navbar-toggle" onclick="decoder.openShortcutsModal()">Shortcuts</button>
             </div>
 
             <div class="navbar-content">
@@ -726,6 +1185,27 @@
                                     value="1500" onchange="decoder.updateSetting('wordGap', this.value)">
                                 <button class="setting-btn" onclick="decoder.adjustSetting('wordGap', 200)">+</button>
                             </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Auto-commit Time (ms)</label>
+                            <div class="setting-control">
+                                <button class="setting-btn"
+                                    onclick="decoder.adjustSetting('autoCommitTime', -500)">−</button>
+                                <input type="number" class="setting-input" id="autoCommitTimeInput" min="1000"
+                                    max="10000" step="100" value="3000"
+                                    onchange="decoder.updateSetting('autoCommitTime', this.value)">
+                                <button class="setting-btn"
+                                    onclick="decoder.adjustSetting('autoCommitTime', 500)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Auto-speak Words</label>
+                            <button class="setting-toggle" id="autoSpeakToggle" onclick="decoder.toggleAutoSpeak()">
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-text">OFF</span>
+                            </button>
                         </div>
                     </div>
 
@@ -840,6 +1320,8 @@
                 this.dashMultiplier = 1.6;
                 this.letterGap = 650;
                 this.wordGap = 4000;
+                this.autoCommitTime = 3000;
+                this.autoSpeak = false;
 
                 this.currentSignalStart = null;
                 this.currentGapStart = null;
@@ -860,6 +1342,31 @@
                 this.navbarRight = false;
                 this.mobileNavOpen = false;
                 this.currentSection = 'audio';
+
+                this.textShortcuts = {
+                    'TK': 'thank you',
+                    'PLS': 'please',
+                    'THX': 'thanks',
+                    'OK': 'okay',
+                    'BRB': 'be right back',
+                    'TTYL': 'talk to you later'
+                };
+
+                this.morseShortcuts = {
+                    '−·−·−−': 'Fantastic',
+                    '·−·−·−': 'Excellent',
+                    '−−··−−': 'Good job',
+                    '···−−−···': 'SOS',
+                    '−·−−·−': 'Start of message',
+                    '·−·−·': 'End of message'
+                };
+
+                this.showShortcutsModal = false;
+                this.textShortcutsPage = 0;
+                this.morseShortcutsPage = 0;
+                this.itemsPerPage = this.calculateItemsPerPage();
+
+                this.autoCommitTimer = null;
 
                 this.morseToText = {
                     '·−': 'A', '−···': 'B', '−·−·': 'C', '−··': 'D', '·': 'E',
@@ -902,9 +1409,12 @@
                     navbar: document.getElementById('navbar'),
                     appContainer: document.getElementById('appContainer'),
                     mobileNavToggle: document.getElementById('mobileNavToggle'),
-                    mobileOverlay: document.getElementById('mobileOverlay')
+                    mobileOverlay: document.getElementById('mobileOverlay'),
+                    autoCommitTimeInput: document.getElementById('autoCommitTimeInput'),
+                    autoSpeakToggle: document.getElementById('autoSpeakToggle')
                 };
 
+                this.updateAutoSpeakToggle();
                 this.updateSectionVisibility();
                 this.checkTTSSupport();
                 this.loadProfilesFromStorage();
@@ -916,6 +1426,7 @@
                 this.elements.stopBtn.addEventListener('click', () => this.stopListening());
                 this.elements.clearBtn.addEventListener('click', () => this.clearAll());
                 this.elements.speakTextBtn.addEventListener('click', () => this.speakText());
+                window.addEventListener('resize', () => this.handleResize());
 
                 this.updateThresholdLine();
                 window.addEventListener("beforeunload", () => this.saveState());
@@ -927,7 +1438,6 @@
                 });
             }
 
-            // Settings Management
             updateSetting(settingName, value) {
                 const numValue = parseFloat(value);
                 this[settingName] = numValue;
@@ -948,7 +1458,6 @@
 
                 let newValue = currentValue + delta;
 
-                // Round to appropriate decimal places
                 if (step < 1) {
                     newValue = Math.round(newValue * 10) / 10;
                 } else {
@@ -967,14 +1476,39 @@
                 this.elements.dashMultiplierInput.value = this.dashMultiplier;
                 this.elements.letterGapInput.value = this.letterGap;
                 this.elements.wordGapInput.value = this.wordGap;
+                this.elements.autoCommitTimeInput.value = this.autoCommitTime;
             }
 
-            toggleNavbarSide() {
-                this.navbarRight = !this.navbarRight;
-                this.elements.appContainer.classList.toggle('navbar-right', this.navbarRight);
-                this.saveState();
+            startAutoCommitTimer() {
+                this.clearAutoCommitTimer();
+
+                if (this.currentLetter) {
+                    this.autoCommitTimer = setTimeout(() => {
+                        this.processLetter();
+                        this.elements.status.textContent = 'Auto-committed incomplete morse code';
+                    }, this.autoCommitTime);
+                }
             }
 
+            clearAutoCommitTimer() {
+                if (this.autoCommitTimer) {
+                    clearTimeout(this.autoCommitTimer);
+                    this.autoCommitTimer = null;
+                }
+            }
+            toggleAutoSpeak() {
+                this.autoSpeak = !this.autoSpeak;
+                this.updateAutoSpeakToggle();
+                this.elements.status.textContent = `Auto-speak ${this.autoSpeak ? 'enabled' : 'disabled'}`;
+            }
+
+            updateAutoSpeakToggle() {
+                const toggle = this.elements.autoSpeakToggle;
+                const text = toggle.querySelector('.toggle-text');
+
+                toggle.classList.toggle('active', this.autoSpeak);
+                text.textContent = this.autoSpeak ? 'ON' : 'OFF';
+            }
             toggleMobileNav() {
                 this.mobileNavOpen = !this.mobileNavOpen;
                 this.elements.navbar.classList.toggle('open', this.mobileNavOpen);
@@ -1015,7 +1549,9 @@
                     dotLength: this.dotLength,
                     dashMultiplier: this.dashMultiplier,
                     letterGap: this.letterGap,
-                    wordGap: this.wordGap
+                    wordGap: this.wordGap,
+                    autoCommitTime: this.autoCommitTime,
+                    autoSpeak: this.autoSpeak
                 };
             }
 
@@ -1025,7 +1561,10 @@
                 this.dashMultiplier = settings.dashMultiplier;
                 this.letterGap = settings.letterGap;
                 this.wordGap = settings.wordGap;
+                this.autoCommitTime = settings.autoCommitTime;
+                this.autoSpeak = settings.autoSpeak || false;
 
+                this.updateAutoSpeakToggle();
                 this.updateSettingInputs();
                 this.updateThresholdLine();
             }
@@ -1080,6 +1619,208 @@
                 }
             }
 
+            openShortcutsModal() {
+                this.itemsPerPage = this.calculateItemsPerPage();
+                this.showShortcutsModal = true;
+                document.getElementById('shortcutsModal').classList.add('show');
+                this.populateShortcutsList();
+            }
+
+            closeShortcutsModal(event) {
+                if (event && event.target !== event.currentTarget) return;
+                this.showShortcutsModal = false;
+                document.getElementById('shortcutsModal').classList.remove('show');
+            }
+
+            populateShortcutsList() {
+                this.populateTextShortcuts();
+                this.populateMorseShortcuts();
+            }
+
+            calculateItemsPerPage() {
+                const modalHeight = window.innerHeight * 0.95;
+                const headerHeight = 60;
+                const footerHeight = 80;
+                const sectionHeaderHeight = 50;
+                const paginationHeight = 50;
+                const addShortcutHeight = 60;
+                const padding = 40;
+
+                const availableHeight = modalHeight - headerHeight - footerHeight - sectionHeaderHeight - paginationHeight - addShortcutHeight - padding;
+
+                const itemHeight = 50;
+                const calculatedItems = Math.floor(availableHeight / itemHeight);
+
+                return Math.max(3, Math.min(10, calculatedItems));
+            }
+
+            handleResize() {
+                const newItemsPerPage = this.calculateItemsPerPage();
+                if (newItemsPerPage !== this.itemsPerPage) {
+                    this.itemsPerPage = newItemsPerPage;
+
+                    const textEntries = Object.keys(this.textShortcuts).length;
+                    const morseEntries = Object.keys(this.morseShortcuts).length;
+
+                    this.textShortcutsPage = Math.min(this.textShortcutsPage, Math.floor(textEntries / this.itemsPerPage));
+                    this.morseShortcutsPage = Math.min(this.morseShortcutsPage, Math.floor(morseEntries / this.itemsPerPage));
+
+                    if (this.showShortcutsModal) {
+                        this.populateShortcutsList();
+                    }
+                }
+            }
+
+            populateTextShortcuts() {
+                const container = document.getElementById('textShortcutsList');
+                const entries = Object.entries(this.textShortcuts);
+                const totalPages = Math.max(1, Math.ceil(entries.length / this.itemsPerPage));
+
+                this.textShortcutsPage = Math.min(this.textShortcutsPage, totalPages - 1);
+                this.textShortcutsPage = Math.max(0, this.textShortcutsPage);
+
+                const startIndex = this.textShortcutsPage * this.itemsPerPage;
+                const endIndex = startIndex + this.itemsPerPage;
+                const pageEntries = entries.slice(startIndex, endIndex);
+
+                container.innerHTML = '';
+
+                pageEntries.forEach(([key, value]) => {
+                    const item = document.createElement('div');
+                    item.className = 'shortcut-item';
+                    item.innerHTML = `
+            <span class="shortcut-key">${key}</span>
+            <span class="shortcut-value">${value}</span>
+            <button class="shortcut-delete" onclick="decoder.deleteTextShortcut('${key}')">Delete</button>
+        `;
+                    container.appendChild(item);
+                });
+
+                this.updateTextPagination(totalPages);
+            }
+
+            populateMorseShortcuts() {
+                const container = document.getElementById('morseShortcutsList');
+                const entries = Object.entries(this.morseShortcuts);
+                const totalPages = Math.max(1, Math.ceil(entries.length / this.itemsPerPage));
+
+                this.morseShortcutsPage = Math.min(this.morseShortcutsPage, totalPages - 1);
+                this.morseShortcutsPage = Math.max(0, this.morseShortcutsPage);
+
+                const startIndex = this.morseShortcutsPage * this.itemsPerPage;
+                const endIndex = startIndex + this.itemsPerPage;
+                const pageEntries = entries.slice(startIndex, endIndex);
+
+                container.innerHTML = '';
+
+                pageEntries.forEach(([key, value]) => {
+                    const item = document.createElement('div');
+                    item.className = 'shortcut-item';
+                    item.innerHTML = `
+            <span class="shortcut-key">${key}</span>
+            <span class="shortcut-value">${value}</span>
+            <button class="shortcut-delete" onclick="decoder.deleteMorseShortcut('${key}')">Delete</button>
+        `;
+                    container.appendChild(item);
+                });
+
+                this.updateMorsePagination(totalPages);
+            }
+            updateTextPagination(totalPages) {
+                const info = document.getElementById('textPaginationInfo');
+                const prevBtn = document.getElementById('textPrevBtn');
+                const nextBtn = document.getElementById('textNextBtn');
+
+                info.textContent = `Page ${this.textShortcutsPage + 1} of ${totalPages}`;
+                prevBtn.disabled = this.textShortcutsPage === 0;
+                nextBtn.disabled = this.textShortcutsPage >= totalPages - 1;
+            }
+
+            updateMorsePagination(totalPages) {
+                const info = document.getElementById('morsePaginationInfo');
+                const prevBtn = document.getElementById('morsePrevBtn');
+                const nextBtn = document.getElementById('morseNextBtn');
+
+                info.textContent = `Page ${this.morseShortcutsPage + 1} of ${totalPages}`;
+                prevBtn.disabled = this.morseShortcutsPage === 0;
+                nextBtn.disabled = this.morseShortcutsPage >= totalPages - 1;
+            }
+
+            changeTextPage(direction) {
+                const totalEntries = Object.keys(this.textShortcuts).length;
+                const totalPages = Math.max(1, Math.ceil(totalEntries / this.itemsPerPage));
+
+                this.textShortcutsPage += direction;
+                this.textShortcutsPage = Math.max(0, Math.min(totalPages - 1, this.textShortcutsPage));
+
+                this.populateTextShortcuts();
+            }
+
+            changeMorsePage(direction) {
+                const totalEntries = Object.keys(this.morseShortcuts).length;
+                const totalPages = Math.max(1, Math.ceil(totalEntries / this.itemsPerPage));
+
+                this.morseShortcutsPage += direction;
+                this.morseShortcutsPage = Math.max(0, Math.min(totalPages - 1, this.morseShortcutsPage));
+
+                this.populateMorseShortcuts();
+            }
+            addTextShortcut() {
+                const key = document.getElementById('newTextKey').value.trim().toUpperCase();
+                const value = document.getElementById('newTextValue').value.trim();
+
+                if (key && value) {
+                    this.textShortcuts[key] = value;
+                    document.getElementById('newTextKey').value = '';
+                    document.getElementById('newTextValue').value = '';
+                    this.populateTextShortcuts();
+                }
+            }
+
+            addMorseShortcut() {
+                const key = document.getElementById('newMorseKey').value.trim();
+                const value = document.getElementById('newMorseValue').value.trim();
+
+                if (key && value) {
+                    this.morseShortcuts[key] = value;
+                    document.getElementById('newMorseKey').value = '';
+                    document.getElementById('newMorseValue').value = '';
+                    this.populateMorseShortcuts();
+                }
+            }
+
+            deleteTextShortcut(key) {
+                delete this.textShortcuts[key];
+                this.populateTextShortcuts();
+            }
+
+            deleteMorseShortcut(key) {
+                delete this.morseShortcuts[key];
+                this.populateMorseShortcuts();
+            }
+
+            restoreDefaultShortcuts() {
+                this.textShortcuts = {
+                    'TK': 'thank you',
+                    'PLS': 'please',
+                    'THX': 'thanks',
+                    'OK': 'okay',
+                    'BRB': 'be right back',
+                    'TTYL': 'talk to you later'
+                };
+
+                this.morseShortcuts = {
+                    '−·−·−−': 'Fantastic',
+                    '·−·−·−': 'Excellent',
+                    '−−··−−': 'Good job',
+                    '···−−−···': 'SOS',
+                    '−·−−·−': 'Start of message',
+                    '·−·−·': 'End of message'
+                };
+
+                this.populateShortcutsList();
+            }
+
             saveProfilesToStorage() {
                 try {
                     const data = JSON.stringify(this.profiles);
@@ -1113,7 +1854,9 @@
                     morse: this.elements.morseOutput.textContent,
                     history: this.sessionHistory,
                     navbarRight: this.navbarRight,
-                    currentProfile: this.currentProfile
+                    currentProfile: this.currentProfile,
+                    textShortcuts: this.textShortcuts,
+                    morseShortcuts: this.morseShortcuts
                 };
                 localStorage.setItem("decoderState", JSON.stringify(state));
             }
@@ -1135,6 +1878,8 @@
                         this.currentProfile = state.currentProfile;
                         this.updateProfileButtons();
                     }
+                    if (state.textShortcuts) this.textShortcuts = state.textShortcuts;
+                    if (state.morseShortcuts) this.morseShortcuts = state.morseShortcuts;
                 }
 
                 // Load first available profile if none loaded
@@ -1186,7 +1931,6 @@
                 const morseGrid = document.getElementById('morseGrid');
                 morseGrid.innerHTML = '';
 
-                // Sort the morse codes by letter for better layout
                 const sortedMorse = Object.entries(this.morseToText).sort((a, b) => a[1].localeCompare(b[1]));
 
                 sortedMorse.forEach(([morseCode, letter]) => {
@@ -1207,7 +1951,51 @@
                     morseGrid.appendChild(morseChar);
                 });
             }
+            highlightMorseReferences() {
+                document.querySelectorAll('.morse-char').forEach(char => {
+                    char.classList.remove('exact-match', 'partial-match');
+                });
 
+                if (!this.currentLetter) return;
+
+                const exactMatch = document.querySelector(`[data-char="${this.morseToText[this.currentLetter] || ''}"]`);
+                if (exactMatch) {
+                    exactMatch.classList.add('exact-match');
+                }
+
+                Object.entries(this.morseToText).forEach(([morseCode, letter]) => {
+                    if (morseCode.startsWith(this.currentLetter) && morseCode !== this.currentLetter) {
+                        const partialMatch = document.querySelector(`[data-char="${letter}"]`);
+                        if (partialMatch) {
+                            partialMatch.classList.add('partial-match');
+                        }
+                    }
+                });
+
+                Object.entries(this.morseShortcuts).forEach(([morseCode, word]) => {
+                    if (morseCode === this.currentLetter) {
+                        const customMatch = Array.from(document.querySelectorAll('.morse-char')).find(el => {
+                            return el.querySelector('.morse-pattern').textContent === morseCode;
+                        });
+                        if (customMatch) {
+                            customMatch.classList.add('exact-match');
+                        }
+                    } else if (morseCode.startsWith(this.currentLetter)) {
+                        const customPartial = Array.from(document.querySelectorAll('.morse-char')).find(el => {
+                            return el.querySelector('.morse-pattern').textContent === morseCode;
+                        });
+                        if (customPartial) {
+                            customPartial.classList.add('partial-match');
+                        }
+                    }
+                });
+            }
+
+            clearMorseHighlights() {
+                document.querySelectorAll('.morse-char').forEach(char => {
+                    char.classList.remove('exact-match', 'partial-match');
+                });
+            }
             async startListening() {
                 try {
                     this.elements.micStatus.textContent = 'Requesting...';
@@ -1256,6 +2044,7 @@
                 this.elements.stopBtn.disabled = true;
                 this.elements.status.textContent = 'Stopped listening';
                 this.processEndOfInput();
+                this.clearAutoCommitTimer();
             }
 
             clearAll() {
@@ -1269,6 +2058,8 @@
                 this.elements.lastSymbol.textContent = '-';
                 this.volumeHistory = [];
                 this.updateVolumeHistory();
+                this.clearAutoCommitTimer();
+                this.clearMorseHighlights();
             }
 
             analyze() {
@@ -1339,9 +2130,14 @@
                 this.currentLetter += symbol;
                 this.elements.lastSymbol.textContent = symbol + ` (${duration}ms)`;
                 this.updateMorseOutput();
+
+                this.highlightMorseReferences();
+                this.startAutoCommitTimer();
             }
 
             processGap(duration) {
+                this.clearAutoCommitTimer();
+
                 if (duration >= this.wordGap) {
                     this.processLetter();
                     this.addSpace();
@@ -1353,21 +2149,57 @@
 
             processLetter() {
                 if (this.currentLetter) {
-                    const letter = this.morseToText[this.currentLetter] || '?';
+                    let letter = this.morseShortcuts[this.currentLetter];
+                    let isWord = false;
+
+                    if (!letter) {
+                        letter = this.morseToText[this.currentLetter] || '?';
+                    } else {
+                        isWord = true;
+                    }
+
                     this.elements.textOutput.textContent += letter;
                     this.currentLetter = '';
                     this.updateMorseOutput();
+
+                    this.clearMorseHighlights();
+
+                    if (isWord) {
+                        this.speakWord(letter);
+                    }
+
+                    this.checkTextShortcuts();
+                }
+            }
+
+            checkTextShortcuts() {
+                const currentText = this.elements.textOutput.textContent;
+
+                for (const [shortcut, replacement] of Object.entries(this.textShortcuts)) {
+                    const regex = new RegExp(`\\b${shortcut}\\b`, 'gi');
+
+                    if (regex.test(currentText)) {
+                        const newText = currentText.replace(regex, replacement);
+                        this.elements.textOutput.textContent = newText;
+
+                        this.speakWord(replacement);
+
+                        this.elements.status.textContent = `Replaced "${shortcut}" with "${replacement}"`;
+                        break;
+                    }
                 }
             }
 
             addSpace() {
                 this.elements.textOutput.textContent += ' ';
+                this.checkTextShortcuts();
             }
 
             processEndOfInput() {
                 if (this.currentLetter) {
                     this.processLetter();
                 }
+                this.checkTextShortcuts();
                 this.saveToHistory();
             }
 
@@ -1441,6 +2273,17 @@
                 }
             }
 
+            speakWord(word) {
+                if (this.autoSpeak && word && 'speechSynthesis' in window) {
+                    speechSynthesis.cancel();
+
+                    const utterance = new SpeechSynthesisUtterance(word.trim());
+                    utterance.rate = 0.8;
+                    utterance.pitch = 1;
+                    speechSynthesis.speak(utterance);
+                }
+            }
+
             exportHistory() {
                 if (this.sessionHistory.length === 0) {
                     this.elements.status.textContent = 'No history to export';
@@ -1482,6 +2325,65 @@
             decoder = new AccessibleMorseDecoder();
         });
     </script>
+    <!-- Shortcuts Modal -->
+    <div class="modal-overlay" id="shortcutsModal" onclick="decoder.closeShortcutsModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Shortcuts Manager</h3>
+                <button class="modal-close" onclick="decoder.closeShortcutsModal()">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="shortcuts-section">
+                    <h4>Text Shortcuts</h4>
+                    <div class="shortcuts-container">
+                        <div class="shortcuts-list-header">
+                            <div class="pagination-info" id="textPaginationInfo">Page 1 of 1</div>
+                            <div class="pagination-controls">
+                                <button class="pagination-btn" id="textPrevBtn" onclick="decoder.changeTextPage(-1)"
+                                    disabled>‹ Prev</button>
+                                <button class="pagination-btn" id="textNextBtn" onclick="decoder.changeTextPage(1)"
+                                    disabled>Next ›</button>
+                            </div>
+                        </div>
+                        <div class="shortcuts-list" id="textShortcutsList"></div>
+                        <div class="add-shortcut">
+                            <input type="text" id="newTextKey" placeholder="Shortcut (e.g., TK)" maxlength="10">
+                            <input type="text" id="newTextValue" placeholder="Full text (e.g., thank you)">
+                            <button onclick="decoder.addTextShortcut()">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shortcuts-section">
+                    <h4>Morse Code Shortcuts</h4>
+                    <div class="shortcuts-container">
+                        <div class="shortcuts-list-header">
+                            <div class="pagination-info" id="morsePaginationInfo">Page 1 of 1</div>
+                            <div class="pagination-controls">
+                                <button class="pagination-btn" id="morsePrevBtn" onclick="decoder.changeMorsePage(-1)"
+                                    disabled>‹ Prev</button>
+                                <button class="pagination-btn" id="morseNextBtn" onclick="decoder.changeMorsePage(1)"
+                                    disabled>Next ›</button>
+                            </div>
+                        </div>
+                        <div class="shortcuts-list" id="morseShortcutsList"></div>
+                        <div class="add-shortcut">
+                            <input type="text" id="newMorseKey" placeholder="Morse code (e.g., −·−·−−)">
+                            <input type="text" id="newMorseValue" placeholder="Meaning (e.g., Fantastic)">
+                            <button onclick="decoder.addMorseShortcut()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="restore-defaults-btn" onclick="decoder.restoreDefaultShortcuts()">Restore
+                    Defaults</button>
+                <button class="save-shortcuts-btn" onclick="decoder.closeShortcutsModal()">Close Modal</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
