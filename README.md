@@ -30,13 +30,13 @@ No installation is required - just open the link in your browser, allow micropho
 - More accessible UI with large buttons and navigation  
 - Auto-speak option for decoded words  
 - Text and Morse code shortcuts system  
-- Visual Morse reference with highlighting  
-- Mobile responsive design  
+- Visual Morse reference with highlighting   
 
 ### 🔜 Planned Features
 - Auto-adjust volume threshold based on ambient noise  
 - Advanced pattern recognition for improved accuracy  
-- Multiple language support  
+- Multiple language support
+- Mobile responsive design 
 
 ---
 
