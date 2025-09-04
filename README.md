@@ -11,13 +11,32 @@ A public version of the project is available here:
 No installation is required - just open the link in your browser, allow microphone access, and start communicating.
 
 ---
-
 ## ✨ Features
-- 🎙️ **Microphone Input**: Detects noise patterns through a mic  
+- 🎙️ **Microphone Input**: Detects noise patterns through a mic with visual feedback  
 - ⬤ **Morse Conversion**: Translates short and long sounds into dots and dashes  
-- 🔤 **Text Output**: Converts Morse code into readable text  
-- 🔊 **Push-to-Speak Option**: Reads the generated text aloud for communication  
-- 🛠️ **Accessibility First**: Designed especially for individuals with limited mobility and no vocal cords  
+- 🔤 **Text Output**: Converts Morse code into readable text with live highlighting  
+- 🔊 **Text-to-Speech**: Reads the generated text aloud for communication  
+- 🗣️ **Auto-speak Mode**: Automatically speaks words as they're decoded  
+- ⌨️ **Custom Shortcuts**: Create text abbreviations (e.g., TK = thank you) and Morse shortcuts  
+- 🧩 **Visual Morse Reference**: Interactive grid showing all Morse characters with live highlighting  
+- 🛠️ **Accessibility First**: Large buttons, mobile responsive, keyboard navigation support  
+- 💾 **Settings Profiles**: Save and load multiple configuration presets  
+
+---
+
+## 🗺️ Roadmap
+
+### ✅ Completed Features
+- More accessible UI with large buttons and navigation  
+- Auto-speak option for decoded words  
+- Text and Morse code shortcuts system  
+- Visual Morse reference with highlighting   
+
+### 🔜 Planned Features
+- Auto-adjust volume threshold based on ambient noise  
+- Advanced pattern recognition for improved accuracy  
+- Multiple language support
+- Mobile responsive design 
 
 ---
 
