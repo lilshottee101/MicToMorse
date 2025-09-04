@@ -21,21 +21,6 @@ No installation is required - just open the link in your browser, allow micropho
 
 ---
 
-## 🗺️ Roadmap
-
-### Bug Fixes
-
-* [ ] Last letter not displaying until new letter is started
-
-### Features
-
-* [ ] Auto adjust volume threshold
-* [ ] Option to say what you wrote without clicking a button. EG: once a known word is made TTS the word
-* [ ] Option to create short cuts for works EG: TK = Thanks
-* [ ] Add Mobile Support [#2](Add Mobile Support)
-
----
-
 ## 🚀 Getting Started
 
 ### Option 1: Use the Live Demo
