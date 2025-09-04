@@ -26,14 +26,13 @@ No installation is required - just open the link in your browser, allow micropho
 ### Bug Fixes
 
 * [ ] Last letter not displaying until new letter is started
-* [ ] Max at 5 characters
 
 ### Features
 
 * [ ] Auto adjust volume threshold
 * [ ] Option to say what you wrote without clicking a button. EG: once a known word is made TTS the word
 * [ ] Option to create short cuts for works EG: TK = Thanks
-* [x] More accessible UI
+* [ ] Add Mobile Support [#2](Add Mobile Support)
 
 ---
 
