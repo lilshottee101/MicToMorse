@@ -606,7 +606,6 @@
             left: 10px;
             right: 10px;
             bottom: 150px;
-            /* More space on mobile for wrapped buttons */
             padding: 8px 10px;
         }
 
@@ -617,7 +616,6 @@
 
         .main-content {
             padding-bottom: 220px;
-            /* More space on mobile */
         }
 
         /* Timing Display */
@@ -1017,7 +1015,6 @@
             border-radius: 8px;
             padding: 15px;
             height: 300px;
-            /* Fixed height to prevent scrolling */
             overflow: hidden;
             margin-bottom: 15px;
             border: 2px solid rgba(255, 255, 255, 0.1);
@@ -1028,9 +1025,7 @@
         .morse-reference {
             position: fixed;
             bottom: 100px;
-            /* Above the action buttons */
             left: 320px;
-            /* Account for navbar width + padding */
             right: 20px;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
@@ -1202,7 +1197,7 @@
 
                         <div class="setting-item">
                             <label class="setting-label">Auto-speak Words</label>
-                            <button class="setting-toggle" id="autoSpeakToggle" onclick="decoder.toggleAutoSpeak()">
+                            <button class="setting-toggle" id="autoSpeakToggle" onclick="decoder.toggleAutoSpeak()" role="switch" aria-checked="false">
                                 <span class="toggle-slider"></span>
                                 <span class="toggle-text">OFF</span>
                             </button>
@@ -1426,12 +1421,12 @@
                 this.elements.stopBtn.addEventListener('click', () => this.stopListening());
                 this.elements.clearBtn.addEventListener('click', () => this.clearAll());
                 this.elements.speakTextBtn.addEventListener('click', () => this.speakText());
-                window.addEventListener('resize', () => this.handleResize());
 
                 this.updateThresholdLine();
                 window.addEventListener("beforeunload", () => this.saveState());
 
                 window.addEventListener('resize', () => {
+                    this.handleResize()
                     if (window.innerWidth > 768) {
                         this.closeMobileNav();
                     }
@@ -1508,6 +1503,7 @@
 
                 toggle.classList.toggle('active', this.autoSpeak);
                 text.textContent = this.autoSpeak ? 'ON' : 'OFF';
+                toggle.setAttribute('aria-checked', String(this.autoSpeak));
             }
             toggleMobileNav() {
                 this.mobileNavOpen = !this.mobileNavOpen;
@@ -1624,6 +1620,8 @@
                 this.showShortcutsModal = true;
                 document.getElementById('shortcutsModal').classList.add('show');
                 this.populateShortcutsList();
+                const closeBtn = document.querySelector('#shortcutsModal .modal-close');
+                if (closeBtn) closeBtn.focus();
             }
 
             closeShortcutsModal(event) {
@@ -1754,6 +1752,7 @@
                 this.textShortcutsPage = Math.max(0, Math.min(totalPages - 1, this.textShortcutsPage));
 
                 this.populateTextShortcuts();
+                this.saveState();
             }
 
             changeMorsePage(direction) {
@@ -1764,6 +1763,7 @@
                 this.morseShortcutsPage = Math.max(0, Math.min(totalPages - 1, this.morseShortcutsPage));
 
                 this.populateMorseShortcuts();
+                this.saveState();
             }
             addTextShortcut() {
                 const key = document.getElementById('newTextKey').value.trim().toUpperCase();
@@ -1775,17 +1775,24 @@
                     document.getElementById('newTextValue').value = '';
                     this.populateTextShortcuts();
                 }
+                this.saveState();
             }
 
             addMorseShortcut() {
                 const key = document.getElementById('newMorseKey').value.trim();
+                const normalizedKey = key.replace(/-/g, '−').replace(/\./g, '·');
+if (!/^[−·\s]+$/.test(normalizedKey)) {
+  this.elements.status.textContent = 'Invalid Morse: only dots and dashes are allowed';
+  return;
+}
                 const value = document.getElementById('newMorseValue').value.trim();
 
                 if (key && value) {
-                    this.morseShortcuts[key] = value;
+                    this.morseShortcuts[normalizedKey] = value;
                     document.getElementById('newMorseKey').value = '';
                     document.getElementById('newMorseValue').value = '';
                     this.populateMorseShortcuts();
+                    this.saveState();
                 }
             }
 
@@ -2327,7 +2334,7 @@
         });
     </script>
     <!-- Shortcuts Modal -->
-    <div class="modal-overlay" id="shortcutsModal" onclick="decoder.closeShortcutsModal(event)">
+    <div class="modal-overlay" id="shortcutsModal" onclick="decoder.closeShortcutsModal(event)" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h3>Shortcuts Manager</h3>
