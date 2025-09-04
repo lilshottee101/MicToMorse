@@ -1,0 +1,291 @@
+.app-container {
+    display: flex;
+    height: 100vh;
+    position: relative;
+}
+
+.app-container.navbar-right {
+    flex-direction: row-reverse;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-xl);
+    padding-bottom: 180px;
+    overflow: hidden;
+}
+
+.status-section {
+    background: var(--tertiary-bg);
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--border-color);
+}
+
+.permissions-status {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 0;
+    flex: 1;
+}
+
+.status-granted {
+    color: var(--status-granted);
+    font-weight: bold;
+}
+
+.status-denied {
+    color: var(--status-denied);
+    font-weight: bold;
+}
+
+.status-prompt {
+    color: var(--status-prompt);
+    font-weight: bold;
+}
+
+.current-status {
+    text-align: center;
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    margin-top: var(--space-sm);
+}
+
+.timing-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    font-size: var(--font-size-sm);
+}
+
+.timing-item {
+    text-align: center;
+    padding: var(--space-sm);
+    background: var(--tertiary-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.timing-value {
+    font-weight: bold;
+    font-size: var(--font-size-lg);
+    margin-top: var(--space-xs);
+    color: var(--accent-color);
+}
+
+.output-container {
+    display: flex;
+    gap: var(--space-xl);
+    flex: 1;
+    min-height: 0;
+}
+
+.output-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.output-header {
+    font-size: var(--font-size-base);
+    font-weight: bold;
+    margin-bottom: var(--space-md);
+    color: var(--accent-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.output-content {
+    flex: 1;
+    padding: var(--space-lg);
+    background: var(--secondary-bg);
+    border-radius: var(--radius-xl);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-lg);
+    line-height: 1.4;
+    word-break: break-all;
+    border: 2px solid var(--border-color);
+    overflow-y: auto;
+    min-height: 80px;
+    backdrop-filter: blur(10px);
+}
+
+.morse-reference {
+    position: fixed;
+    bottom: 100px;
+    left: calc(var(--navbar-width) + var(--space-xl));
+    right: var(--space-xl);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    padding: var(--space-md) var(--space-lg);
+    border: 2px solid var(--border-color);
+    z-index: var(--z-dropdown);
+}
+
+.app-container.navbar-right .morse-reference {
+    left: var(--space-xl);
+    right: calc(var(--navbar-width) + var(--space-xl));
+}
+
+.morse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: var(--space-sm);
+}
+
+.morse-char {
+    background: var(--tertiary-bg);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    border: 2px solid transparent;
+}
+
+.morse-char:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.morse-char.active {
+    background: var(--btn-accent);
+    border-color: var(--text-primary);
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+}
+
+.morse-char.exact-match {
+    background: linear-gradient(45deg, var(--accent-color), #ffed4e);
+    border-color: var(--accent-color);
+    color: #333;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    transform: scale(1.05);
+}
+
+.morse-char.exact-match .morse-pattern,
+.morse-char.exact-match .morse-letter {
+    color: #333;
+}
+
+.morse-char.partial-match {
+    background: linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 237, 78, 0.3));
+    border-color: rgba(255, 215, 0, 0.5);
+    transform: scale(1.02);
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.morse-pattern {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: var(--space-xs);
+}
+
+.morse-letter {
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.action-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: var(--space-lg) var(--space-xl);
+    display: flex;
+    gap: var(--space-lg);
+    border-top: 2px solid var(--border-color);
+    height: var(--action-buttons-height);
+    z-index: var(--z-dropdown);
+}
+
+@media (min-width: 1200px) {
+    .timing-display {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .morse-grid {
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+        gap: var(--space-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .output-container {
+        flex-direction: column;
+        gap: var(--space-lg);
+    }
+    
+    .morse-reference {
+        left: var(--space-md);
+        right: var(--space-md);
+        bottom: 150px;
+        padding: var(--space-sm) var(--space-md);
+    }
+    
+    .app-container.navbar-right .morse-reference {
+        left: var(--space-md);
+        right: var(--space-md);
+    }
+    
+    .main-content {
+        padding: var(--space-md);
+        padding-bottom: 220px;
+    }
+    
+    .morse-grid {
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        gap: var(--space-xs);
+    }
+    
+    .morse-char {
+        padding: var(--space-xs);
+    }
+    
+    .morse-pattern {
+        font-size: var(--font-size-xs);
+    }
+    
+    .morse-letter {
+        font-size: 0.7rem;
+    }
+    
+    .action-buttons {
+        flex-wrap: wrap;
+        height: auto;
+        min-height: var(--action-buttons-height);
+    }
+    
+    .permissions-status {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    
+    .status-item {
+        justify-content: space-between;
+    }
+}

@@ -1,0 +1,240 @@
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: calc(var(--z-modal) - 1);
+}
+
+@media (max-width: 768px) {
+        .mobile-overlay.show {
+        display: block;
+    }
+    
+        .navbar {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        height: 100vh;
+        z-index: var(--z-modal);
+        transition: left var(--transition-normal);
+        width: var(--navbar-width);
+    }
+    
+    .navbar.open {
+        left: 0;
+    }
+    
+    .app-container.navbar-right .navbar {
+        left: auto;
+        right: -300px;
+        transition: right var(--transition-normal);
+    }
+    
+    .app-container.navbar-right .navbar.open {
+        right: 0;
+    }
+    
+        .main-content {
+        width: 100%;
+        padding: var(--space-md);
+        padding-top: 70px;         padding-bottom: 180px;
+    }
+    
+        .status-section {
+        padding: var(--space-md);
+        margin-bottom: var(--space-lg);
+    }
+    
+    .permissions-status {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+    
+    .status-item {
+        justify-content: space-between;
+        padding: var(--space-xs) 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .status-item:last-child {
+        border-bottom: none;
+    }
+    
+        .timing-display {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+        font-size: var(--font-size-xs);
+    }
+    
+    .timing-item {
+        padding: var(--space-sm);
+    }
+    
+    .timing-value {
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --space-xs: 2px;
+        --space-sm: 6px;
+        --space-md: 10px;
+        --space-lg: 14px;
+        --space-xl: 18px;
+    }
+    
+    .main-content {
+        padding: var(--space-sm);
+        padding-top: 60px;
+        padding-bottom: 200px;
+    }
+    
+        .navbar {
+        width: 280px;
+    }
+    
+    .navbar.open {
+        width: 280px;
+    }
+    
+        .current-status {
+        font-size: var(--font-size-base);
+        padding: var(--space-sm);
+    }
+    
+        .timing-display {
+        grid-template-columns: 1fr;
+    }
+    
+        .output-container {
+        flex-direction: column;
+    }
+    
+    .output-content {
+        min-height: 60px;
+        padding: var(--space-md);
+        font-size: var(--font-size-base);
+    }
+    
+        .morse-reference {
+        bottom: 140px;
+        padding: var(--space-sm);
+    }
+    
+    .morse-char {
+        padding: var(--space-xs);
+        font-size: var(--font-size-xs);
+    }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+    .main-content {
+        padding-bottom: 120px;
+    }
+    
+    .action-buttons {
+        height: 60px;
+        padding: var(--space-md);
+    }
+    
+    .action-btn {
+        min-height: 40px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .morse-reference {
+        bottom: 70px;
+        padding: var(--space-xs) var(--space-sm);
+    }
+    
+    .morse-grid {
+        grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+        gap: 4px;
+    }
+    
+    .morse-char {
+        padding: 4px;
+    }
+    
+    .morse-pattern,
+    .morse-letter {
+        font-size: 0.6rem;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+        button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .setting-btn {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .output-btn {
+        padding: var(--space-md);
+        min-height: 44px;
+    }
+    
+        *:hover {
+        transform: none !important;
+    }
+    
+        button:active {
+        transform: scale(0.95) !important;
+        transition: transform 0.1s ease;
+    }
+    
+    .action-btn:active {
+        opacity: 0.8;
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    .morse-reference {
+        border-width: 1px;
+    }
+    
+    .threshold-line {
+        height: 2px;
+    }
+    
+    .volume-bar-history {
+        width: 1px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar {
+        transition: none;
+    }
+    
+    .mobile-overlay {
+        transition: none;
+    }
+    
+    button {
+        transition: none;
+    }
+    
+    .action-btn:hover {
+        transform: none;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .mobile-overlay {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    
+    .navbar {
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+}

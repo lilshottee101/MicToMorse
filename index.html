@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Code Decoder</title>
+    <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+    <div class="app-container" id="appContainer">
+
+        <button class="mobile-nav-toggle" id="mobileNavToggle" hidden>
+            ☰ Settings
+        </button>
+
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+
+        <!-- Navbar -->
+        <nav class="navbar" id="navbar">
+            <div class="navbar-header">
+                <div class="navbar-title">Settings</div>
+                <button class="navbar-toggle" id="shortcutsBtn">Shortcuts</button>
+            </div>
+
+            <div class="navbar-content">
+                <div class="navbar-scroll-container">
+                    <!-- Section Navigation -->
+                    <div class="section-nav">
+                        <button class="section-nav-btn active" id="audioSectionBtn">Audio & Timing</button>
+                        <button class="section-nav-btn" id="profileSectionBtn">Profiles</button>
+                    </div>
+
+                    <!-- Audio & Timing Settings -->
+                    <div class="navbar-section" id="audioSection">
+                        <div class="section-title">Audio & Timing</div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Volume Threshold</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" data-setting="threshold" data-delta="-5">−</button>
+                                <input type="number" class="setting-input" id="thresholdInput" min="5" max="95" value="30">
+                                <button class="setting-btn" data-setting="threshold" data-delta="5">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Dot Length (ms)</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" data-setting="dotLength" data-delta="-50">−</button>
+                                <input type="number" class="setting-input" id="dotLengthInput" min="50" max="1000" value="200">
+                                <button class="setting-btn" data-setting="dotLength" data-delta="50">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Dash Multiplier</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" data-setting="dashMultiplier" data-delta="-0.1">−</button>
+                                <input type="number" class="setting-input" id="dashMultiplierInput" min="1.1" max="5" step="0.1" value="2.5">
+                                <button class="setting-btn" data-setting="dashMultiplier" data-delta="0.1">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Letter Gap (ms)</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" data-setting="letterGap" data-delta="-100">−</button>
+                                <input type="number" class="setting-input" id="letterGapInput" min="300" max="2000" value="600">
+                                <button class="setting-btn" data-setting="letterGap" data-delta="100">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Word Gap (ms)</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" data-setting="wordGap" data-delta="-200">−</button>
+                                <input type="number" class="setting-input" id="wordGapInput" min="800" max="4000" value="1500">
+                                <button class="setting-btn" data-setting="wordGap" data-delta="200">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Auto-commit Time (ms)</label>
+                            <div class="setting-control">
+                                <button class="setting-btn" data-setting="autoCommitTime" data-delta="-500">−</button>
+                                <input type="number" class="setting-input" id="autoCommitTimeInput" min="1000" max="10000" step="100" value="3000">
+                                <button class="setting-btn" data-setting="autoCommitTime" data-delta="500">+</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">Auto-speak Words</label>
+                            <button class="setting-toggle" id="autoSpeakToggle">
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-text">OFF</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Profile Section -->
+                    <div class="navbar-section" id="profileSection" style="display: none;">
+                        <div class="section-title">Settings Profiles</div>
+
+                        <div class="profile-buttons">
+                            <button class="profile-btn" data-profile="1">Profile 1</button>
+                            <button class="profile-btn" data-profile="2">Profile 2</button>
+                            <button class="profile-btn" data-profile="3">Profile 3</button>
+                        </div>
+
+                        <div class="profile-controls">
+                            <input type="text" id="profileName" class="profile-name-input" placeholder="Enter profile name..." maxlength="20">
+                            <div class="profile-action-btns">
+                                <button class="save-btn" id="saveProfileBtn">Save Current</button>
+                                <button class="delete-btn" id="deleteProfileBtn">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="status-section">
+                <div class="permissions-status">
+                    <div class="status-item">
+                        <span>Microphone:</span> 
+                        <span id="micStatus">Click Start to check</span>
+                    </div>
+                    <div class="status-item">
+                        <span>Text-to-Speech:</span> 
+                        <span id="ttsStatus">Checking...</span>
+                    </div>
+                </div>
+                <div class="current-status" id="status">Click "Start Listening" to begin</div>
+            </div>
+
+            <div class="visualizer">
+                <div class="volume-history" id="volumeHistory"></div>
+                <div class="threshold-line" id="thresholdLine"></div>
+            </div>
+
+            <div class="timing-display">
+                <div class="timing-item">
+                    <div>Current Signal</div>
+                    <div class="timing-value" id="currentSignal">-</div>
+                </div>
+                <div class="timing-item">
+                    <div>Duration</div>
+                    <div class="timing-value" id="signalDuration">0ms</div>
+                </div>
+                <div class="timing-item">
+                    <div>Gap</div>
+                    <div class="timing-value" id="gapDuration">0ms</div>
+                </div>
+                <div class="timing-item">
+                    <div>Last Symbol</div>
+                    <div class="timing-value" id="lastSymbol">-</div>
+                </div>
+            </div>
+
+            <div class="output-container">
+                <div class="output-section">
+                    <div class="output-header">
+                        Morse Code
+                        <button class="output-btn" id="copyMorseBtn">Copy</button>
+                    </div>
+                    <div class="output-content" id="morseOutput"></div>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-header">
+                        Decoded Text
+                        <div>
+                            <button class="output-btn" id="copyTextBtn">Copy</button>
+                            <button class="output-btn" id="speakBtn">Speak</button>
+                        </div>
+                    </div>
+                    <div class="output-content" id="textOutput"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="morse-reference">
+        <div class="morse-grid" id="morseGrid"></div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="action-btn start-btn" id="startBtn">Start Listening</button>
+        <button class="action-btn stop-btn" id="stopBtn" disabled>Stop</button>
+        <button class="action-btn clear-btn" id="clearBtn">Clear All</button>
+        <button class="action-btn speak-btn" id="speakTextBtn">Speak Text</button>
+    </div>
+
+    <div class="modal-overlay" id="shortcutsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shortcuts Manager</h3>
+                <button class="modal-close" id="closeModalBtn">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="shortcuts-section">
+                    <h4>Text Shortcuts</h4>
+                    <div class="shortcuts-container">
+                        <div class="shortcuts-list-header">
+                            <div class="pagination-info" id="textPaginationInfo">Page 1 of 1</div>
+                            <div class="pagination-controls">
+                                <button class="pagination-btn" id="textPrevBtn" disabled>‹ Prev</button>
+                                <button class="pagination-btn" id="textNextBtn" disabled>Next ›</button>
+                            </div>
+                        </div>
+                        <div class="shortcuts-list" id="textShortcutsList"></div>
+                        <div class="add-shortcut">
+                            <input type="text" id="newTextKey" placeholder="Shortcut (e.g., TK)" maxlength="10">
+                            <input type="text" id="newTextValue" placeholder="Full text (e.g., thank you)">
+                            <button id="addTextShortcutBtn">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shortcuts-section">
+                    <h4>Morse Code Shortcuts</h4>
+                    <div class="shortcuts-container">
+                        <div class="shortcuts-list-header">
+                            <div class="pagination-info" id="morsePaginationInfo">Page 1 of 1</div>
+                            <div class="pagination-controls">
+                                <button class="pagination-btn" id="morsePrevBtn" disabled>‹ Prev</button>
+                                <button class="pagination-btn" id="morseNextBtn" disabled>Next ›</button>
+                            </div>
+                        </div>
+                        <div class="shortcuts-list" id="morseShortcutsList"></div>
+                        <div class="add-shortcut">
+                            <input type="text" id="newMorseKey" placeholder="Morse code (e.g., −·−·−−)">
+                            <input type="text" id="newMorseValue" placeholder="Meaning (e.g., Fantastic)">
+                            <button id="addMorseShortcutBtn">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="restore-defaults-btn" id="restoreDefaultsBtn">Restore Defaults</button>
+                <button class="save-shortcuts-btn" id="saveShortcutsBtn">Close Modal</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

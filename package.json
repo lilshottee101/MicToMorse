@@ -1,0 +1,16 @@
+{
+  "name": "mictomorse",
+  "version": "0.0.0",
+  "type": "module",
+  "author": "Liam Sidney",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate:todo": "node utils/generateTODO.js"
+  },
+  "devDependencies": {
+    "vite": "^7.1.2"
+  }
+}
