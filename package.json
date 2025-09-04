@@ -1,0 +1,10 @@
+{
+  "name": "mictomorse",
+  "version": "0.0.0",
+  "type": "module",
+  "author": "Liam Sidney",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo Skipped Build"
+  }
+}
