@@ -1,9 +1,9 @@
-import { AudioProcessor } from '@components/AudioProcessor.js';
-import { MorseDecoder } from '@components/MorseDecoder.js';
-import { SpeechManager } from '@components/SpeechManager.js';
-import { SettingsManager } from '@components/SettingsManager.js';
-import { ShortcutsManager } from '@components/ShortcutsManager.js';
-import { UIController } from '@components/UIController.js';
+import { AudioProcessor } from '@components/audioProcessor.js';
+import { MorseDecoder } from '@components/morseDecoder.js';
+import { SpeechManager } from '@components/speechManager.js';
+import { SettingsManager } from '@components/settingsManager.js';
+import { ShortcutsManager } from '@components/shortcutsManager.js';
+import { UIController } from '@components/uiController.js';
 import { DEFAULT_SETTINGS } from '@utils/constants.js';
 
 export class MorseCodeDecoderApp {
