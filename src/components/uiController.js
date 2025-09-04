@@ -22,7 +22,8 @@ export class UIController {
             
             status: $id('status'),
             morseOutput: $id('morseOutput'),
-            textOutput: $id('textOutput')
+            textOutput: $id('textOutput'),
+            settingsModalBtn: $id('settingsModalBtn')
         };
         
         this.onStartListening = null;
@@ -30,6 +31,7 @@ export class UIController {
         this.onClearAll = null;
         this.onSpeakText = null;
         this.onOpenShortcuts = null;
+        this.onOpenSettings = null;
         
         this.setupEventListeners();
         this.setupMobileResponsiveness();
@@ -70,6 +72,10 @@ export class UIController {
         
         if (this.elements.mobileOverlay) {
             on(this.elements.mobileOverlay, 'click', () => this.closeMobileNav());
+        }
+
+        if (this.elements.settingsModalBtn) {
+            on(this.elements.settingsModalBtn, 'click', () => this.handleOpenSettings());
         }
         
         window.addEventListener('resize', () => this.handleWindowResize());
@@ -334,5 +340,15 @@ export class UIController {
     
     setOnOpenShortcuts(callback) {
         this.onOpenShortcuts = callback;
+    }
+
+    setOnOpenSettings(callback) {
+        this.onOpenSettings = callback;
+    }
+
+    handleOpenSettings() {
+        if (this.onOpenSettings) {
+            this.onOpenSettings();
+        }
     }
 }

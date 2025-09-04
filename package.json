@@ -12,5 +12,8 @@
   },
   "devDependencies": {
     "vite": "^7.1.2"
+  },
+  "dependencies": {
+    "@diffusionstudio/vits-web": "^1.0.3"
   }
 }

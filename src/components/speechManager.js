@@ -9,6 +9,9 @@ export class SpeechManager {
         
         this.isSupported = 'speechSynthesis' in window;
         this.isSpeaking = false;
+
+        this.vitsInstance = null;
+        this.currentProvider = 'utterance';
         
         this.elements = {
             ttsStatus: $id('ttsStatus'),
@@ -35,6 +38,14 @@ export class SpeechManager {
     }
     
     speak(text, options = {}) {
+        if (this.currentProvider === 'vits') {
+            return this.speakWithVits(text, options);
+        } else {
+            return this.speakWithUtterance(text, options);
+        }
+    }
+
+    speakWithUtterance(text, options = {}) {
         if (!this.isSupported || !text || !text.trim()) {
             return Promise.reject(new Error('Speech synthesis not available or no text provided'));
         }
@@ -190,5 +201,45 @@ export class SpeechManager {
     
     setOnSpeakError(callback) {
         this.onSpeakError = callback;
+    }
+
+    async setProvider(provider) {
+        this.currentProvider = provider;
+        
+        if (provider === 'vits' && !this.vitsInstance) {
+            try {
+                this.vitsInstance = await import('@diffusionstudio/vits-web');
+            } catch (error) {
+                console.error('Failed to load VITS:', error);
+                throw new Error('VITS provider not available');
+            }
+        }
+    }
+    
+    async speakWithVits(text, options = {}) {
+        if (!this.vitsInstance) {
+            throw new Error('VITS not initialized');
+        }
+        
+        const { voiceId = 'en_US-hfc_female-medium' } = options;
+        
+        try {
+            const wav = await this.vitsInstance.predict({
+                text: text,
+                voiceId: voiceId
+            });
+            
+            const audio = new Audio();
+            audio.src = URL.createObjectURL(wav);
+            
+            return new Promise((resolve, reject) => {
+                audio.onended = resolve;
+                audio.onerror = reject;
+                audio.play();
+            });
+            
+        } catch (error) {
+            throw new Error(`VITS speech failed: ${error.message}`);
+        }
     }
 }

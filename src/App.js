@@ -3,6 +3,7 @@ import { MorseDecoder } from '@components/morseDecoder.js';
 import { SpeechManager } from '@components/speechManager.js';
 import { SettingsManager } from '@components/settingsManager.js';
 import { ShortcutsManager } from '@components/shortcutsManager.js';
+import { SettingsModal } from '@components/SettingsModal.js';
 import { UIController } from '@components/uiController.js';
 import { DEFAULT_SETTINGS } from '@utils/constants.js';
 
@@ -13,6 +14,7 @@ export class MorseCodeDecoderApp {
         this.speechManager = new SpeechManager(DEFAULT_SETTINGS);
         this.settingsManager = new SettingsManager();
         this.shortcutsManager = new ShortcutsManager();
+        this.settingsModal = new SettingsModal(this.speechManager);
         this.uiController = new UIController();
         
         this.sessionHistory = [];
@@ -82,6 +84,10 @@ export class MorseCodeDecoderApp {
         
         this.speechManager.setOnSpeakError((error) => {
             this.updateStatus(`Speech error: ${error.message}`);
+        });
+
+        this.uiController.setOnOpenSettings(() => {
+            this.settingsModal.open();
         });
     }
     

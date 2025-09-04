@@ -20,6 +20,7 @@
             <div class="navbar-header">
                 <div class="navbar-title">Settings</div>
                 <button class="navbar-toggle" id="shortcutsBtn">Shortcuts</button>
+                <button class="navbar-toggle" id="settingsModalBtn">Settings</button>
             </div>
 
             <div class="navbar-content">
@@ -243,6 +244,94 @@
             <div class="modal-footer">
                 <button class="restore-defaults-btn" id="restoreDefaultsBtn">Restore Defaults</button>
                 <button class="save-shortcuts-btn" id="saveShortcutsBtn">Close Modal</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Application Settings</h3>
+                <button class="modal-close" id="closeSettingsModalBtn">×</button>
+            </div>
+    
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="tts">Text-to-Speech</button>
+                <!-- Future tabs will go here -->
+            </div>
+    
+            <div class="modal-body">
+                <div class="settings-tab" id="ttsTab">
+                    <div class="settings-group">
+                        <h4>Speech Provider</h4>
+                        <div class="provider-selector">
+                            <label class="provider-option">
+                                <input type="radio" name="ttsProvider" value="utterance" checked>
+                                <span>Speech Synthesis API (Built-in)</span>
+                            </label>
+                            <label class="provider-option">
+                                <input type="radio" name="ttsProvider" value="vits">
+                                <span>VITS Web (Neural Voices)</span>
+                            </label>
+                        </div>
+                    </div>
+    
+                    <!-- Utterance Settings -->
+                    <div class="settings-group" id="utteranceSettings">
+                        <h4>Speech Synthesis Settings</h4>
+                        
+                        <div class="setting-row">
+                            <label>Voice</label>
+                            <select id="voiceSelect" class="setting-select"></select>
+                        </div>
+                        
+                        <div class="setting-row">
+                            <label>Rate: <span id="rateValue">0.8</span></label>
+                            <input type="range" id="rateSlider" min="0.1" max="3" step="0.1" value="0.8" class="setting-slider">
+                        </div>
+                        
+                        <div class="setting-row">
+                            <label>Pitch: <span id="pitchValue">1</span></label>
+                            <input type="range" id="pitchSlider" min="0" max="2" step="0.1" value="1" class="setting-slider">
+                        </div>
+                        
+                        <div class="setting-row">
+                            <label>Volume: <span id="volumeValue">0.8</span></label>
+                            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.8" class="setting-slider">
+                        </div>
+                    </div>
+    
+                    <!-- VITS Settings -->
+                    <div class="settings-group hidden" id="vitsSettings">
+                        <h4>VITS Neural Voice Settings</h4>
+                        
+                        <div class="setting-row">
+                            <label>Voice Model</label>
+                            <select id="vitsVoiceSelect" class="setting-select">
+                                <option value="">Loading voices...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-row">
+                            <label>Speed: <span id="vitsSpeedValue">1.0</span></label>
+                            <input type="range" id="vitsSpeedSlider" min="0.5" max="2" step="0.1" value="1.0" class="setting-slider">
+                        </div>
+                        
+                        <div class="model-status">
+                            <h5>Downloaded Models</h5>
+                            <div id="downloadedModels" class="model-list">
+                                <div class="model-item">
+                                    <span>No models downloaded</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="settings-actions">
+                        <button id="testSpeechBtn" class="test-btn">Test Speech</button>
+                        <button id="resetTtsBtn" class="reset-btn">Reset to Defaults</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
