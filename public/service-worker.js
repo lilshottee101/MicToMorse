@@ -23,7 +23,7 @@ self.addEventListener('install', (event) => {
       .then(() => self.skipWaiting())
   );
 });
-as
+
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
