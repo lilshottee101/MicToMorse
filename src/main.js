@@ -1,7 +1,9 @@
 import { MorseCodeDecoderApp } from './App.js';
+import { registerServiceWorker } from './registerServiceWorker';
 
 document.addEventListener('DOMContentLoaded', () => {
     try {
+        registerServiceWorker();
         const app = new MorseCodeDecoderApp();
         
         window.morseApp = app;
