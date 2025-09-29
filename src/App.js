@@ -3,7 +3,7 @@ import { MorseDecoder } from '@components/morseDecoder.js';
 import { SpeechManager } from '@components/speechManager.js';
 import { SettingsManager } from '@components/settingsManager.js';
 import { ShortcutsManager } from '@components/shortcutsManager.js';
-import { SettingsModal } from '@components/SettingsModal.js';
+import { SettingsModal } from '@components/settingsModal.js';
 import { UIController } from '@components/uiController.js';
 import { DEFAULT_SETTINGS } from '@utils/constants.js';
 
