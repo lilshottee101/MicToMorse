@@ -1,5 +1,5 @@
 import { MorseCodeDecoderApp } from './App.js';
-import { registerServiceWorker } from './registerServiceWorker';
+import { registerServiceWorker } from './utils/registerServiceWorker';
 
 document.addEventListener('DOMContentLoaded', () => {
     try {
