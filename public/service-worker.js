@@ -38,7 +38,7 @@ self.addEventListener('activate', (event) => {
     }).then(() => self.clients.claim())
   );
 });
-asd
+
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
