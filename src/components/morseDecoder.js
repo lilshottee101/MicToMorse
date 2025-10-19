@@ -54,7 +54,7 @@ export class MorseDecoder {
         let isWord = !!letter;
         
         if (!letter) {
-            letter = MORSE_TO_TEXT[this.currentLetter] || '?';
+            letter = MORSE_TO_TEXT[this.currentLetter] || '';
         }
         
         this.addToTextOutput(letter);
