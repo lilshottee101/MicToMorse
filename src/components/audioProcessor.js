@@ -91,7 +91,7 @@ export class AudioProcessor {
         this.currentGapStart = null;
     }
     
-        analyze() {
+   	analyze() {
         if (!this.isListening) return;
         
         this.analyser.getByteFrequencyData(this.dataArray);
@@ -113,34 +113,56 @@ export class AudioProcessor {
         const now = Date.now();
         const isAboveThreshold = volume > this.threshold;
         
-        if (isAboveThreshold && !this.isSignalActive) {
-            this.isSignalActive = true;
-            this.currentSignalStart = now;
-            
-            if (this.currentGapStart) {
-                const gapDuration = now - this.currentGapStart;
-                this.updateGapDisplay(gapDuration);
-                this.processGap(gapDuration);
+        if (isAboveThreshold) {
+            // Signal detected
+            if (this.pendingGapTimeout) {
+                // Cancel pending gap transition
+                clearTimeout(this.pendingGapTimeout);
+                this.pendingGapTimeout = null;
+                console.log("Signal resumed - gap transition cancelled");
             }
             
-            this.updateSignalDisplay('Signal');
-            
-        } else if (!isAboveThreshold && this.isSignalActive) {
-            this.isSignalActive = false;
-            this.currentGapStart = now;
-            
-            if (this.currentSignalStart) {
-                const signalDuration = now - this.currentSignalStart;
-                this.updateSignalDurationDisplay(signalDuration);
-                this.processSignal(signalDuration);
+            if (!this.isSignalActive) {
+                // Start new signal period
+                this.isSignalActive = true;
+                this.currentSignalStart = now;
+                
+                if (this.currentGapStart) {
+                    const gapDuration = now - this.currentGapStart;
+                    this.updateGapDisplay(gapDuration);
+                    this.processGap(gapDuration);
+                    this.currentGapStart = null;
+                }
+                
+                this.updateSignalDisplay('Signal');
             }
             
-            this.updateSignalDisplay('Gap');
+        } else if (!isAboveThreshold && this.isSignalActive && !this.pendingGapTimeout) {
+            // Signal dropped below threshold - start debounce timer
+            console.log(`Signal below threshold - waiting ${AUDIO_CONFIG.defaultDebounceMs}ms before confirming gap`);
+            
+            this.pendingGapTimeout = setTimeout(() => {
+                // Timeout expired - confirm gap
+                this.isSignalActive = false;
+                this.currentGapStart = Date.now();
+                this.pendingGapTimeout = null;
+                
+                if (this.currentSignalStart) {
+                    const signalDuration = Date.now() - this.currentSignalStart;
+                    this.updateSignalDurationDisplay(signalDuration);
+                    this.processSignal(signalDuration);
+                    this.currentSignalStart = null;
+                }
+                
+                this.updateSignalDisplay('Gap');
+                console.log("Gap confirmed after timeout");
+            }, AUDIO_CONFIG.defaultDebounceMs);
         }
         
+        // Update duration displays
         if (this.isSignalActive && this.currentSignalStart) {
             this.updateSignalDurationDisplay(now - this.currentSignalStart);
-        } else if (!this.isSignalActive && this.currentGapStart) {
+        } else if (!this.isSignalActive && this.currentGapStart && !this.pendingGapTimeout) {
             this.updateGapDisplay(now - this.currentGapStart);
         }
         
@@ -149,8 +171,7 @@ export class AudioProcessor {
         }
         
         requestAnimationFrame(() => this.analyze());
-    }
-    
+    } 
         processSignal(duration) {
         const dashThreshold = this.dotLength * this.dashMultiplier;
         const symbol = duration >= dashThreshold ? SYMBOLS.DASH : SYMBOLS.DOT;

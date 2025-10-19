@@ -40,7 +40,8 @@ export const DEFAULT_MORSE_SHORTCUTS = {
 export const AUDIO_CONFIG = {
     fftSize: 256,
     smoothingTimeConstant: 0.3,
-    maxHistoryLength: 200
+    maxHistoryLength: 200,
+    defaultDebounceMs: 5
 };
 
 export const SECTIONS = {

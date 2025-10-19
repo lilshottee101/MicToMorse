@@ -49,15 +49,25 @@
 									data-delta="5">+</button>
 							</div>
 						</div>
-
+						<div class="setting-item">
+							<label class="setting-label">Dot Delay (ms)</label>
+							<div class="setting-control">
+								<button class="setting-btn" data-setting="dotDebounce"
+									data-delta="-5">−</button>
+								<input type="number" class="setting-input"
+									id="dotDebounce" min="0" max="1000" value="5">
+								<button class="setting-btn" data-setting="dotDebounce"
+									data-delta="5">+</button>
+							</div>
+						</div>
 						<div class="setting-item">
 							<label class="setting-label">Dot Length (ms)</label>
 							<div class="setting-control">
 								<button class="setting-btn" data-setting="dotLength"
 									data-delta="-50">−</button>
 								<input type="number" class="setting-input"
-									id="dotLengthInput" min="50" max="1000"
-									value="200">
+									id="dotLengthInput" min="20" max="1000"
+									value="50">
 								<button class="setting-btn" data-setting="dotLength"
 									data-delta="50">+</button>
 							</div>
@@ -70,7 +80,7 @@
 									data-setting="dashMultiplier"
 									data-delta="-0.1">−</button>
 								<input type="number" class="setting-input"
-									id="dashMultiplierInput" min="1.1" max="5"
+									id="dashMultiplierInput" min="1.1" max="3"
 									step="0.1" value="2.5">
 								<button class="setting-btn"
 									data-setting="dashMultiplier"
