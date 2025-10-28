@@ -110,7 +110,7 @@
     background: var(--secondary-bg);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
-    height: 300px;     overflow: hidden;
+    height: 100%;     overflow: hidden;
     margin-bottom: var(--space-lg);
     border: 2px solid var(--border-color);
     display: flex;

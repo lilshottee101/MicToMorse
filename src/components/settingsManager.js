@@ -20,6 +20,7 @@ export class SettingsManager {
 			letterGapInput: $id('letterGapInput'),
 			wordGapInput: $id('wordGapInput'),
 			autoSpeakToggle: $id('autoSpeakToggle'),
+			dotDebounceInput: $id('dotDebounceInput'),
 
 			profileName: $id('profileName'),
 			saveProfileBtn: $id('saveProfileBtn'),
