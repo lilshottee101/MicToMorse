@@ -1,13 +1,13 @@
 #morseOutput {
     letter-spacing: 0.1em;
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-3xl);
     color: var(--accent-color);
     text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
 }
 
 #textOutput {
     color: var(--text-primary);
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-3xl);
     line-height: 1.6;
     word-wrap: break-word;
 }
