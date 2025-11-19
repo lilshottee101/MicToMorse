@@ -262,6 +262,7 @@ button:disabled {
   z-index: 1;
   top: -5px;
   left: 110%;
+  font-size: 24px;
 }
 
 .tooltiptext::after {
